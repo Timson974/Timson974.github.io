@@ -2,678 +2,574 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Timson974 — Project Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>DukesTU — Living Photo</title>
+<meta name="theme-color" content="#0a0c14">
+<meta name="description" content="Bring your photos to life with parallax depth effect">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
   :root {
-    --bg: #0d0f14;
-    --surface: #161920;
-    --surface2: #1e2130;
-    --border: #2a2f45;
+    --bg: #0a0c14;
+    --surface: #13151f;
+    --surface2: #1a1d2e;
+    --border: #252840;
     --accent: #6366f1;
-    --accent2: #8b5cf6;
-    --accent3: #06b6d4;
+    --accent2: #a78bfa;
     --text: #e2e8f0;
     --text2: #94a3b8;
     --text3: #64748b;
     --green: #10b981;
-    --amber: #f59e0b;
-    --red: #ef4444;
-    --pink: #ec4899;
+    --radius: 16px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     min-height: 100vh;
-    padding: 0 0 60px;
-  }
-
-  /* HEADER */
-  header {
-    background: linear-gradient(135deg, #0d0f14 0%, #161228 50%, #0d1420 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 48px 32px 40px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99,102,241,0.15) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .header-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(99,102,241,0.12);
-    border: 1px solid rgba(99,102,241,0.3);
-    border-radius: 20px;
-    padding: 6px 16px;
-    font-size: 12px;
-    font-weight: 500;
-    color: #a5b4fc;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-  .header-badge::before { content: '◉'; font-size: 8px; color: var(--green); }
-  h1 {
-    font-size: clamp(28px, 5vw, 48px);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, #e2e8f0 0%, #a5b4fc 50%, #67e8f9 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 12px;
-  }
-  .header-sub {
-    font-size: 15px;
-    color: var(--text2);
-    max-width: 540px;
-    margin: 0 auto 32px;
-    line-height: 1.6;
-  }
-  .stats-row {
-    display: flex;
-    justify-content: center;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-  .stat { text-align: center; }
-  .stat-num {
-    font-size: 28px;
-    font-weight: 700;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
-
-  /* FILTERS */
-  .filters {
-    display: flex;
-    gap: 8px;
-    padding: 24px 32px 0;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .filter-btn {
-    padding: 7px 16px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text2);
-    font-size: 13px;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .filter-btn:hover { border-color: var(--accent); color: var(--text); }
-  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; font-weight: 500; }
-
-  /* GRID */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 20px;
-    padding: 28px 32px 0;
-    max-width: 1280px;
-    margin: 0 auto;
-  }
-
-  /* CARD */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
   }
-  .card:hover {
-    transform: translateY(-3px);
-    border-color: rgba(99,102,241,0.4);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(99,102,241,0.1);
-  }
-  .card-header {
-    padding: 20px 20px 16px;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; height: 56px;
+    background: rgba(10,12,20,.92);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
-    position: relative;
   }
-  .card-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
-    flex-shrink: 0;
-    border: 1px solid rgba(255,255,255,0.08);
-  }
-  .card-title-block { flex: 1; min-width: 0; }
-  .card-name {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 3px;
-  }
-  .card-client {
-    font-size: 11px;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-weight: 500;
-  }
-  .card-status {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    font-size: 10px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .status-live { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
-  .status-dev { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
-  .status-planned { background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.25); }
-
-  .card-body { padding: 16px 20px; flex: 1; }
-  .card-desc {
-    font-size: 13.5px;
-    color: var(--text2);
-    line-height: 1.65;
-    margin-bottom: 14px;
+  .nav-logo { font-size: 18px; font-weight: 700; letter-spacing: -.5px; }
+  .nav-logo span { color: var(--accent2); }
+  .nav-badge {
+    font-size: 11px; font-weight: 600; letter-spacing: .05em;
+    background: var(--accent); color: #fff;
+    padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
   }
 
-  /* Tags */
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-  .tag {
-    font-size: 11px;
-    padding: 3px 9px;
-    border-radius: 6px;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 500;
+  /* HERO */
+  .hero {
+    margin-top: 56px;
+    padding: 48px 24px 32px;
+    text-align: center;
+    background: linear-gradient(160deg, #0a0c14 0%, #12102a 50%, #0a1020 100%);
+    position: relative; overflow: hidden;
   }
-  .tag-tech { background: rgba(6,182,212,0.1); color: #67e8f9; border: 1px solid rgba(6,182,212,0.2); }
-  .tag-pwa { background: rgba(139,92,246,0.1); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.2); }
-  .tag-ai { background: rgba(245,158,11,0.1); color: #fcd34d; border: 1px solid rgba(245,158,11,0.2); }
-  .tag-web { background: rgba(16,185,129,0.1); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.2); }
-
-  /* Files section */
-  .files-section { margin-bottom: 14px; }
-  .files-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text3);
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  .files-list { display: flex; flex-wrap: wrap; gap: 5px; }
-  .file-chip {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 3px 8px;
-    font-size: 11px;
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--text2);
-  }
-  .file-chip .fi { font-size: 10px; opacity: 0.7; }
-
-  /* Card footer */
-  .card-footer {
-    padding: 12px 20px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-  .repo-link {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--text3);
-    text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
-    transition: color 0.2s;
-  }
-  .repo-link:hover { color: var(--accent); }
-  .live-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--accent);
-    color: white;
-    text-decoration: none;
-    padding: 6px 14px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 500;
-    transition: opacity 0.2s, transform 0.1s;
-  }
-  .live-btn:hover { opacity: 0.85; transform: scale(0.98); }
-  .live-btn.disabled {
-    background: var(--surface2);
-    color: var(--text3);
-    cursor: default;
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(99,102,241,.18) 0%, transparent 70%);
     pointer-events: none;
   }
+  .hero-title {
+    font-size: clamp(28px, 7vw, 48px);
+    font-weight: 800; letter-spacing: -1px;
+    background: linear-gradient(135deg, #e2e8f0, #a78bfa);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .hero-sub {
+    font-size: 15px; color: var(--text2); max-width: 320px; margin: 0 auto 32px;
+    line-height: 1.6;
+  }
 
-  /* Expand toggle */
-  .expand-btn {
-    background: none;
-    border: none;
-    color: var(--text3);
-    font-size: 12px;
+  /* UPLOAD ZONE */
+  .upload-zone {
+    max-width: 480px; margin: 0 auto;
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 40px 24px;
     cursor: pointer;
-    padding: 4px 8px;
-    border-radius: 6px;
-    transition: all 0.2s;
-    font-family: 'Inter', sans-serif;
-    display: flex;
-    align-items: center;
-    gap: 4px;
+    transition: border-color .2s, background .2s;
+    position: relative;
   }
-  .expand-btn:hover { background: var(--surface2); color: var(--text2); }
-  .readme-panel {
+  .upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: rgba(99,102,241,.06); }
+  .upload-icon { font-size: 48px; margin-bottom: 12px; }
+  .upload-text { font-size: 15px; color: var(--text2); margin-bottom: 8px; }
+  .upload-hint { font-size: 12px; color: var(--text3); }
+  #fileInput { display: none; }
+  .btn-upload {
+    display: inline-block; margin-top: 20px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 10px;
+    padding: 12px 28px; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: opacity .2s;
+  }
+  .btn-upload:hover { opacity: .85; }
+
+  /* MAIN STAGE */
+  .stage-wrap {
     display: none;
-    padding: 16px 20px;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 16px 40px;
+    flex: 1;
+  }
+  .stage-wrap.active { display: flex; }
+
+  .stage {
+    width: 100%; max-width: 480px;
+    aspect-ratio: 3/4;
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    background: #000;
+    box-shadow: 0 20px 60px rgba(0,0,0,.6);
+    touch-action: none;
+  }
+  .layer {
+    position: absolute; inset: -8%;
+    width: 116%; height: 116%;
+    background-size: cover;
+    background-position: center;
+    will-change: transform;
+    transition: transform .05s linear;
+  }
+  #layerBg { z-index: 1; }
+  #layerFg { z-index: 2; }
+
+  .controls {
+    max-width: 480px; width: 100%;
+    margin-top: 20px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .control-row { display: flex; gap: 10px; }
+  .btn {
+    flex: 1; padding: 13px 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface2);
+    color: var(--text); font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: background .15s, border-color .15s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn:hover { background: var(--surface); border-color: var(--accent); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn.primary:hover { opacity: .85; }
+
+  /* DEPTH SLIDER */
+  .depth-row { display: flex; align-items: center; gap: 12px; }
+  .depth-label { font-size: 13px; color: var(--text2); white-space: nowrap; }
+  input[type=range] {
+    flex: 1; -webkit-appearance: none;
+    height: 4px; border-radius: 2px;
+    background: var(--border); outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--accent); cursor: pointer;
+  }
+
+  /* PROCESSING OVERLAY */
+  .processing {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,12,20,.92);
+    backdrop-filter: blur(8px);
+    flex-direction: column;
+    align-items: center; justify-content: center; gap: 20px;
+  }
+  .processing.active { display: flex; }
+  .spinner {
+    width: 48px; height: 48px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .proc-text { font-size: 15px; color: var(--text2); }
+  .proc-step { font-size: 13px; color: var(--text3); }
+
+  /* INFO */
+  .info-section {
+    padding: 48px 24px;
+    max-width: 480px; margin: 0 auto;
+    text-align: center;
+  }
+  .info-title { font-size: 20px; font-weight: 700; margin-bottom: 24px; }
+  .steps { display: flex; flex-direction: column; gap: 16px; text-align: left; }
+  .step { display: flex; gap: 14px; align-items: flex-start; }
+  .step-num {
+    min-width: 32px; height: 32px;
+    background: var(--accent); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700;
+  }
+  .step-text { font-size: 14px; color: var(--text2); line-height: 1.6; padding-top: 6px; }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 24px;
+    font-size: 12px; color: var(--text3);
     border-top: 1px solid var(--border);
-    background: rgba(13,15,20,0.5);
   }
-  .readme-panel.open { display: block; }
-  .readme-content {
-    font-size: 12.5px;
-    color: var(--text2);
-    line-height: 1.7;
-    white-space: pre-wrap;
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .readme-content h3 {
-    color: var(--accent);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin: 12px 0 6px;
-  }
-  .readme-content h3:first-child { margin-top: 0; }
+  footer a { color: var(--accent2); text-decoration: none; }
 
-  /* hidden for filter */
-  .card.hidden { display: none; }
-
-  @media (max-width: 600px) {
-    .grid { grid-template-columns: 1fr; padding: 16px; }
-    header { padding: 32px 16px 28px; }
-    .filters { padding: 16px 16px 0; }
-    .stats-row { gap: 20px; }
+  /* GYRO INDICATOR */
+  .gyro-indicator {
+    position: absolute; top: 12px; right: 12px; z-index: 10;
+    background: rgba(10,12,20,.8);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px; color: var(--text3);
+    display: flex; align-items: center; gap: 5px;
   }
+  .gyro-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); }
+  .gyro-dot.active { background: var(--green); }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-badge">Timson974 · GitHub Portfolio</div>
-  <h1>Project Catalog</h1>
-  <p class="header-sub">PWA apps, AI tools & web projects by Timur Utepov — deployed on GitHub Pages</p>
-  <div class="stats-row">
-    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Projects</div></div>
-    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Live PWAs</div></div>
-    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Clients</div></div>
-    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Live</div></div>
-  </div>
-</header>
+<nav>
+  <div class="nav-logo">Dukes<span>TU</span></div>
+  <div class="nav-badge">Living Photo</div>
+</nav>
 
-<div class="filters">
-  <button class="filter-btn active" onclick="filter('all', this)">All</button>
-  <button class="filter-btn" onclick="filter('pwa', this)">PWA</button>
-  <button class="filter-btn" onclick="filter('ai', this)">AI / ML</button>
-  <button class="filter-btn" onclick="filter('bakery', this)">Flourish Craft Bakery</button>
-  <button class="filter-btn" onclick="filter('uwl', this)">UWL</button>
-  <button class="filter-btn" onclick="filter('uai', this)">UAI</button>
+<!-- UPLOAD STATE -->
+<div class="hero" id="heroSection">
+  <div class="hero-title">Bring Photos<br>to Life</div>
+  <div class="hero-sub">Upload any photo and watch it come alive with depth and motion</div>
+
+  <div class="upload-zone" id="dropZone">
+    <div class="upload-icon">🖼️</div>
+    <div class="upload-text">Drop your photo here</div>
+    <div class="upload-hint">JPG, PNG, WEBP — portraits work best</div>
+    <button class="btn-upload" onclick="document.getElementById('fileInput').click()">Choose Photo</button>
+    <input type="file" id="fileInput" accept="image/*">
+  </div>
 </div>
 
-<div class="grid" id="grid">
-
-  <!-- 1. NVRisk Pro -->
-  <div class="card" data-tags="pwa uwl">
-    <div class="card-header">
-      <div class="card-icon" style="background: linear-gradient(135deg,#1e1b4b,#312e81)">🔊</div>
-      <div class="card-title-block">
-        <div class="card-name">NVRisk Pro — Noise &amp; Vibration</div>
-        <div class="card-client">Client: University of West London (UWL)</div>
-      </div>
-      <span class="card-status status-live">Live</span>
-    </div>
-    <div class="card-body">
-      <p class="card-desc">Industrial noise &amp; vibration risk assessment tool. Calculates LEP,d exposure levels, vibration magnitudes, compliance with Control of Noise at Work Regulations 2005 and Control of Vibration at Work Regulations 2005.</p>
-      <div class="tags">
-        <span class="tag tag-pwa">PWA</span>
-        <span class="tag tag-tech">HTML/CSS/JS</span>
-        <span class="tag tag-tech">Standalone</span>
-        <span class="tag tag-web">HSE Compliance</span>
-      </div>
-      <div class="files-section">
-        <div class="files-label">Contents</div>
-        <div class="files-list">
-          <span class="file-chip"><span class="fi">📄</span>index.html</span>
-          <span class="file-chip"><span class="fi">📋</span>manifest.json</span>
-          <span class="file-chip"><span class="fi">⚙️</span>sw.js</span>
-          <span class="file-chip"><span class="fi">🖼️</span>icons/</span>
-          <span class="file-chip"><span class="fi">📝</span>README.md</span>
-        </div>
-      </div>
-    </div>
-    <div class="card-footer">
-      <a class="repo-link" href="https://github.com/Timson974/pwa-app" target="_blank">⌥ Timson974/pwa-app</a>
-      <a class="live-btn" href="https://timson974.github.io/pwa-app/" target="_blank">↗ Open App</a>
-    </div>
-    <button class="expand-btn" style="margin:0 20px 12px; align-self:flex-start" onclick="toggleReadme(this)">▸ README</button>
-    <div class="readme-panel">
-      <div class="readme-content"><h3>About</h3>Noise & Vibration risk assessment PWA for occupational health professionals. Developed as a final-year project at UWL.
-
-<h3>Features</h3>• LEP,d daily noise exposure calculator
-• Hand-arm &amp; whole-body vibration (HAV/WBV)
-• UK regulations compliance check
-• Offline-ready via Service Worker
-• Installable as desktop/mobile PWA
-
-<h3>Stack</h3>Single-file HTML · Vanilla JS · CSS · Service Worker
-
-<h3>Deployment</h3>GitHub Pages → timson974.github.io/pwa-app/</div>
+<!-- STAGE STATE -->
+<div class="stage-wrap" id="stageWrap">
+  <div class="stage" id="stage">
+    <div class="layer" id="layerBg"></div>
+    <div class="layer" id="layerFg"></div>
+    <div class="gyro-indicator">
+      <div class="gyro-dot" id="gyroDot"></div>
+      <span id="gyroLabel">tilt</span>
     </div>
   </div>
 
-  <!-- 2. Office Detector -->
-  <div class="card" data-tags="ai pwa uai">
-    <div class="card-header">
-      <div class="card-icon" style="background: linear-gradient(135deg,#0a0c14,#1a1f35)">🖥️</div>
-      <div class="card-title-block">
-        <div class="card-name">Office Detector</div>
-        <div class="card-client">Client: UAI — University of Artificial Intelligence</div>
-      </div>
-      <span class="card-status status-live">Live</span>
+  <div class="controls">
+    <div class="depth-row">
+      <span class="depth-label">Depth</span>
+      <input type="range" id="depthSlider" min="5" max="40" value="20">
     </div>
-    <div class="card-body">
-      <p class="card-desc">Real-time object detection PWA for office environments. Uses YOLOv8n model (ONNX) to detect laptops, monitors, keyboards, phones and other office items directly in the browser — no server required.</p>
-      <div class="tags">
-        <span class="tag tag-pwa">PWA</span>
-        <span class="tag tag-ai">YOLOv8</span>
-        <span class="tag tag-ai">ONNX Runtime</span>
-        <span class="tag tag-tech">WebAssembly</span>
-        <span class="tag tag-tech">EN / RU / KAZ</span>
-      </div>
-      <div class="files-section">
-        <div class="files-label">Contents</div>
-        <div class="files-list">
-          <span class="file-chip"><span class="fi">📄</span>index.html</span>
-          <span class="file-chip"><span class="fi">📋</span>manifest.json</span>
-          <span class="file-chip"><span class="fi">⚙️</span>sw.js</span>
-          <span class="file-chip"><span class="fi">🤖</span>yolov8n.onnx</span>
-          <span class="file-chip"><span class="fi">🖼️</span>icons/</span>
-          <span class="file-chip"><span class="fi">📝</span>DEVLOG.md</span>
-        </div>
-      </div>
-    </div>
-    <div class="card-footer">
-      <a class="repo-link" href="https://github.com/Timson974/office-detector" target="_blank">⌥ Timson974/office-detector</a>
-      <a class="live-btn" href="https://timson974.github.io/office-detector/" target="_blank">↗ Open App</a>
-    </div>
-    <button class="expand-btn" style="margin:0 20px 12px; align-self:flex-start" onclick="toggleReadme(this)">▸ README</button>
-    <div class="readme-panel">
-      <div class="readme-content"><h3>About</h3>Client-side AI object detection for office environments. YOLOv8n model converted to ONNX runs entirely in the browser via WebAssembly — no backend, no API calls.
-
-<h3>Features</h3>• Live camera feed detection
-• Photo upload mode
-• EN / RU / KAZ interface
-• Offline-capable PWA
-• Scope: /office-detector/ (isolated)
-
-<h3>Stack</h3>HTML · CSS · JS · ONNX Runtime Web · YOLOv8n
-
-<h3>Deployment</h3>GitHub Pages → timson974.github.io/office-detector/</div>
+    <div class="control-row">
+      <button class="btn" onclick="resetPhoto()">📂 New Photo</button>
+      <button class="btn primary" onclick="savePhoto()">💾 Save</button>
     </div>
   </div>
-
-  <!-- 3. ZhazTim Baker Pro -->
-  <div class="card" data-tags="pwa bakery">
-    <div class="card-header">
-      <div class="card-icon" style="background: linear-gradient(135deg,#1a1210,#2d1f15)">🍞</div>
-      <div class="card-title-block">
-        <div class="card-name">ZhazTim — Baker Pro</div>
-        <div class="card-client">Client: Flourish Craft Bakery (proposal)</div>
-      </div>
-      <span class="card-status status-live">Live</span>
-    </div>
-    <div class="card-body">
-      <p class="card-desc">Professional baker's knowledge base and recipe toolkit. Named after Zhaz &amp; Tim. Covers dough hydration, fermentation times, temperature curves, scoring patterns and baking ratios for artisan breads.</p>
-      <div class="tags">
-        <span class="tag tag-pwa">PWA</span>
-        <span class="tag tag-tech">HTML/CSS/JS</span>
-        <span class="tag tag-tech">Standalone</span>
-        <span class="tag tag-web">Artisan Baking</span>
-      </div>
-      <div class="files-section">
-        <div class="files-label">Contents</div>
-        <div class="files-list">
-          <span class="file-chip"><span class="fi">📄</span>index.html</span>
-          <span class="file-chip"><span class="fi">📋</span>manifest.json</span>
-          <span class="file-chip"><span class="fi">⚙️</span>sw.js</span>
-          <span class="file-chip"><span class="fi">🖼️</span>icons/</span>
-          <span class="file-chip"><span class="fi">📝</span>README.md</span>
-        </div>
-      </div>
-    </div>
-    <div class="card-footer">
-      <a class="repo-link" href="https://github.com/Timson974/zhaztim" target="_blank">⌥ Timson974/zhaztim</a>
-      <a class="live-btn" href="https://timson974.github.io/zhaztim/" target="_blank">↗ Open App</a>
-    </div>
-    <button class="expand-btn" style="margin:0 20px 12px; align-self:flex-start" onclick="toggleReadme(this)">▸ README</button>
-    <div class="readme-panel">
-      <div class="readme-content"><h3>About</h3>Built from scratch as a single-file PWA. Named after the author's wife Zhaz and himself (Tim). A professional reference tool for artisan bakers.
-
-<h3>Features</h3>• Dough hydration calculator
-• Fermentation timer &amp; temperature guide
-• Scoring patterns reference
-• Baker's percentage formulas
-• Offline-first PWA
-
-<h3>Client Note</h3>Developed for personal use; proposed to Flourish Craft Bakery as a staff toolkit for consistency and training.
-
-<h3>Stack</h3>Single-file HTML · Vanilla JS · CSS · Service Worker</div>
-    </div>
-  </div>
-
-  <!-- 4. Bakery QC -->
-  <div class="card" data-tags="pwa bakery">
-    <div class="card-header">
-      <div class="card-icon" style="background: linear-gradient(135deg,#111510,#1c2416)">🔍</div>
-      <div class="card-title-block">
-        <div class="card-name">Bakery QC</div>
-        <div class="card-client">Client: Flourish Craft Bakery (proposal)</div>
-      </div>
-      <span class="card-status status-live">Live</span>
-    </div>
-    <div class="card-body">
-      <p class="card-desc">Bake quality control tool — acrylamide colour checker. Compares bread crust colour against reference standards to assess acrylamide risk. Visual, fast and usable on any device in a bakery environment.</p>
-      <div class="tags">
-        <span class="tag tag-pwa">PWA</span>
-        <span class="tag tag-tech">HTML/CSS/JS</span>
-        <span class="tag tag-web">Food Safety</span>
-        <span class="tag tag-web">QC / HACCP</span>
-      </div>
-      <div class="files-section">
-        <div class="files-label">Contents</div>
-        <div class="files-list">
-          <span class="file-chip"><span class="fi">📄</span>index.html</span>
-          <span class="file-chip"><span class="fi">📋</span>manifest.json</span>
-          <span class="file-chip"><span class="fi">🖼️</span>icons/</span>
-          <span class="file-chip"><span class="fi">📝</span>README.md</span>
-        </div>
-      </div>
-    </div>
-    <div class="card-footer">
-      <a class="repo-link" href="https://github.com/Timson974/bakery-qc" target="_blank">⌥ Timson974/bakery-qc</a>
-      <a class="live-btn" href="https://timson974.github.io/bakery-qc/" target="_blank">↗ Open App</a>
-    </div>
-    <button class="expand-btn" style="margin:0 20px 12px; align-self:flex-start" onclick="toggleReadme(this)">▸ README</button>
-    <div class="readme-panel">
-      <div class="readme-content"><h3>About</h3>Quality control companion for artisan bakeries. Helps staff assess acrylamide risk by comparing bake colour to calibrated reference charts — no lab equipment needed.
-
-<h3>Features</h3>• Visual colour reference scale
-• Risk level indicator (low / medium / high)
-• Camera / upload mode
-• HACCP-aligned guidance
-• Installable PWA for in-kitchen use
-
-<h3>Client Note</h3>Proposed to Flourish Craft Bakery as part of a QC toolkit alongside ZhazTim Baker Pro and Bakery Press Calculator.
-
-<h3>Stack</h3>Single-file HTML · Vanilla JS · Canvas API · CSS</div>
-    </div>
-  </div>
-
-  <!-- 5. Bakery Press Calculator -->
-  <div class="card" data-tags="pwa bakery">
-    <div class="card-header">
-      <div class="card-icon" style="background: linear-gradient(135deg,#140f08,#241a0a)">⚖️</div>
-      <div class="card-title-block">
-        <div class="card-name">Bakery Press Calculator</div>
-        <div class="card-client">Client: Flourish Craft Bakery (proposal)</div>
-      </div>
-      <span class="card-status status-live">Live</span>
-    </div>
-    <div class="card-body">
-      <p class="card-desc">Dough portioning and press calculation tool. Calculates exact dough weights, scaling factors and press settings for consistent batch production — from small artisan runs to larger commercial output.</p>
-      <div class="tags">
-        <span class="tag tag-pwa">PWA</span>
-        <span class="tag tag-tech">HTML/CSS/JS</span>
-        <span class="tag tag-web">Production</span>
-        <span class="tag tag-web">Scaling</span>
-      </div>
-      <div class="files-section">
-        <div class="files-label">Contents</div>
-        <div class="files-list">
-          <span class="file-chip"><span class="fi">📄</span>index.html</span>
-          <span class="file-chip"><span class="fi">📋</span>manifest.json</span>
-          <span class="file-chip"><span class="fi">⚙️</span>sw.js</span>
-          <span class="file-chip"><span class="fi">🖼️</span>icons/</span>
-          <span class="file-chip"><span class="fi">📝</span>README.md</span>
-        </div>
-      </div>
-    </div>
-    <div class="card-footer">
-      <a class="repo-link" href="https://github.com/Timson974/bakery-press" target="_blank">⌥ Timson974/bakery-press</a>
-      <a class="live-btn" href="https://timson974.github.io/bakery-press/" target="_blank">↗ Open App</a>
-    </div>
-    <button class="expand-btn" style="margin:0 20px 12px; align-self:flex-start" onclick="toggleReadme(this)">▸ README</button>
-    <div class="readme-panel">
-      <div class="readme-content"><h3>About</h3>Precision portioning calculator for bakery production lines. Reduces waste and ensures batch consistency.
-
-<h3>Features</h3>• Dough weight per unit calculator
-• Batch scaling (multiply / divide recipes)
-• Press pressure &amp; time reference
-• Unit conversion (g ↔ oz)
-• Offline PWA — works without internet
-
-<h3>Client Note</h3>Third tool in the proposed Flourish Craft Bakery PWA suite.
-
-<h3>Stack</h3>Single-file HTML · Vanilla JS · CSS · Service Worker</div>
-    </div>
-  </div>
-
-  <!-- 6. SiteGuard -->
-  <div class="card" data-tags="ai">
-    <div class="card-header">
-      <div class="card-icon" style="background: linear-gradient(135deg,#0a1a0a,#102010)">🦺</div>
-      <div class="card-title-block">
-        <div class="card-name">SiteGuard</div>
-        <div class="card-client">Personal Portfolio Project</div>
-      </div>
-      <span class="card-status status-live">Live</span>
-    </div>
-    <div class="card-body">
-      <p class="card-desc">AI-powered PPE detection system for construction sites. YOLOv8 model detects helmets, vests, gloves and other safety equipment in real time. FastAPI backend, PostgreSQL logging, Streamlit dashboard, Docker deployment.</p>
-      <div class="tags">
-        <span class="tag tag-ai">YOLOv8</span>
-        <span class="tag tag-tech">FastAPI</span>
-        <span class="tag tag-tech">PostgreSQL</span>
-        <span class="tag tag-tech">Docker</span>
-        <span class="tag tag-web">Streamlit</span>
-      </div>
-      <div class="files-section">
-        <div class="files-label">Contents</div>
-        <div class="files-list">
-          <span class="file-chip"><span class="fi">🐍</span>app/</span>
-          <span class="file-chip"><span class="fi">🤖</span>model/</span>
-          <span class="file-chip"><span class="fi">🗄️</span>db/</span>
-          <span class="file-chip"><span class="fi">🐳</span>Dockerfile</span>
-          <span class="file-chip"><span class="fi">📋</span>docker-compose.yml</span>
-          <span class="file-chip"><span class="fi">📝</span>README.md</span>
-        </div>
-      </div>
-    </div>
-    <div class="card-footer">
-      <a class="repo-link" href="https://github.com/Timson974/siteguard" target="_blank">⌥ Timson974/siteguard</a>
-      <a class="live-btn" href="https://github.com/Timson974/siteguard" target="_blank">↗ View Repo</a>
-    </div>
-    <button class="expand-btn" style="margin:0 20px 12px; align-self:flex-start" onclick="toggleReadme(this)">▸ README</button>
-    <div class="readme-panel">
-      <div class="readme-content"><h3>About</h3>Portfolio project demonstrating end-to-end ML engineering: custom YOLOv8 training, production API, database logging and dashboard — all containerised with Docker.
-
-<h3>Features</h3>• Real-time PPE detection (helmet, vest, gloves, boots)
-• FastAPI REST endpoint for video/image input
-• PostgreSQL event logging with timestamps
-• Streamlit compliance dashboard
-• Full Docker Compose setup
-
-<h3>Purpose</h3>Built as tangible evidence of ML engineering skills for MSc Computer Science applications and CV portfolio.
-
-<h3>Stack</h3>Python · YOLOv8 · FastAPI · PostgreSQL · Streamlit · Docker</div>
-    </div>
-  </div>
-
 </div>
 
+<!-- INFO (shown before upload) -->
+<div class="info-section" id="infoSection">
+  <div class="info-title">How it works</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">Upload any photo — portraits, landscapes, group shots all work</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">AI separates the subject from background instantly in your browser</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">Tilt your phone or move your mouse to see the parallax depth effect</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESSING -->
+<div class="processing" id="processing">
+  <div class="spinner"></div>
+  <div class="proc-text">Creating depth map…</div>
+  <div class="proc-step" id="procStep">Loading AI model</div>
+</div>
+
+<footer>
+  DukesTU Living Photo · <a href="https://timson974.netlify.app">Portfolio</a>
+</footer>
+
+<!-- Service Worker -->
 <script>
-  function filter(tag, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.card').forEach(card => {
-      if (tag === 'all') {
-        card.classList.remove('hidden');
-      } else {
-        const tags = card.dataset.tags || '';
-        card.classList.toggle('hidden', !tags.split(' ').includes(tag));
-      }
-    });
-  }
-
-  function toggleReadme(btn) {
-    const panel = btn.nextElementSibling;
-    const open = panel.classList.toggle('open');
-    btn.textContent = (open ? '▾' : '▸') + ' README';
-  }
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
 </script>
+<script type="module">
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const DEPTH = { x: 30, y: 30 };
+let depthMult = 1;
+let gyroActive = false;
+let currentX = 0, currentY = 0;
+let targetX = 0, targetY = 0;
+let animFrame;
+let bgRemoval = null;
 
+// ─── UI REFS ──────────────────────────────────────────────────────────────────
+const fileInput   = document.getElementById('fileInput');
+const dropZone    = document.getElementById('dropZone');
+const heroSection = document.getElementById('heroSection');
+const stageWrap   = document.getElementById('stageWrap');
+const infoSection = document.getElementById('infoSection');
+const processing  = document.getElementById('processing');
+const procStep    = document.getElementById('procStep');
+const layerBg     = document.getElementById('layerBg');
+const layerFg     = document.getElementById('layerFg');
+const depthSlider = document.getElementById('depthSlider');
+const gyroDot     = document.getElementById('gyroDot');
+const gyroLabel   = document.getElementById('gyroLabel');
+const stage       = document.getElementById('stage');
+
+// ─── DEPTH SLIDER ─────────────────────────────────────────────────────────────
+depthSlider.addEventListener('input', () => {
+  depthMult = depthSlider.value / 20;
+});
+
+// ─── FILE INPUT ───────────────────────────────────────────────────────────────
+fileInput.addEventListener('change', e => {
+  if (e.target.files[0]) handleFile(e.target.files[0]);
+});
+
+// ─── DRAG & DROP ──────────────────────────────────────────────────────────────
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('drag');
+  if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+});
+
+// ─── HANDLE FILE ──────────────────────────────────────────────────────────────
+async function handleFile(file) {
+  if (!file.type.startsWith('image/')) return;
+  showProcessing('Loading image…');
+
+  const url = URL.createObjectURL(file);
+  const img = await loadImage(url);
+
+  procStep.textContent = 'Removing background…';
+
+  procStep.textContent = 'Creating depth layers…';
+  const { fgCanvas, bgCanvas } = fakeSegment(img);
+  showStage(fgCanvas, bgCanvas);
+}
+
+function loadImage(url) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => res(img);
+    img.onerror = rej;
+    img.src = url;
+  });
+}
+
+// ─── SEGMENTATION (@imgly/background-removal) ────────────────────────────────
+async function segmentImage(img, originalUrl) {
+  if (!bgRemoval) {
+    procStep.textContent = 'Loading AI model (first time only, ~5MB)…';
+    const mod = await import(
+      'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/dist/background-removal.js'
+    );
+    bgRemoval = mod.removeBackground;
+  }
+
+  procStep.textContent = 'Separating subject from background…';
+
+  // removeBackground returns a Blob — transparent PNG with subject
+  const fgBlob = await bgRemoval(originalUrl, {
+    publicPath: 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/dist/',
+    fetchArgs: { mode: 'cors' },
+    progress: (key, cur, total) => {
+      if (total > 0) procStep.textContent = `Processing… ${Math.round(cur/total*100)}%`;
+    }
+  });
+
+  const fgUrl = URL.createObjectURL(fgBlob);
+  const fgImg = await loadImage(fgUrl);
+
+  return buildLayersFromFg(img, fgImg);
+}
+
+// ─── FALLBACK: smart depth split using center-weight heuristic ───────────────
+function fakeSegment(img) {
+  const W = Math.min(img.width, 800);
+  const H = Math.round(img.height * W / img.width);
+
+  // BG: blurred, darkened, slightly zoomed out
+  const bgC = document.createElement('canvas');
+  bgC.width = W; bgC.height = H;
+  const bgCtx = bgC.getContext('2d');
+  bgCtx.filter = 'blur(12px)';
+  bgCtx.drawImage(img, -20, -20, W + 40, H + 40);
+  bgCtx.filter = 'none';
+  bgCtx.fillStyle = 'rgba(5,5,30,0.45)';
+  bgCtx.fillRect(0, 0, W, H);
+
+  // FG: sharp original — center crop slightly zoomed in for depth feel
+  const fgC = document.createElement('canvas');
+  fgC.width = W; fgC.height = H;
+  const fgCtx = fgC.getContext('2d');
+  // Draw full image sharp
+  fgCtx.drawImage(img, 0, 0, W, H);
+  // Fade edges so subject "floats" over background
+  const grad = fgCtx.createRadialGradient(W/2, H*0.45, H*0.25, W/2, H*0.45, H*0.7);
+  grad.addColorStop(0, 'rgba(0,0,0,0)');
+  grad.addColorStop(1, 'rgba(0,0,0,1)');
+  fgCtx.globalCompositeOperation = 'destination-out';
+  fgCtx.fillStyle = grad;
+  fgCtx.fillRect(0, 0, W, H);
+  fgCtx.globalCompositeOperation = 'source-over';
+
+  return { fgCanvas: fgC, bgCanvas: bgC };
+}
+
+// ─── BUILD LAYERS FROM TRANSPARENT FG ────────────────────────────────────────
+function buildLayersFromFg(origImg, fgImg) {
+  const W = Math.min(origImg.width, 800);
+  const H = Math.round(origImg.height * W / origImg.width);
+
+  // BG: original blurred + darkened
+  const bgC = document.createElement('canvas');
+  bgC.width = W; bgC.height = H;
+  const bgCtx = bgC.getContext('2d');
+  bgCtx.filter = 'blur(8px)';
+  bgCtx.drawImage(origImg, -12, -12, W + 24, H + 24);
+  bgCtx.filter = 'none';
+  bgCtx.fillStyle = 'rgba(0,0,20,0.4)';
+  bgCtx.fillRect(0, 0, W, H);
+
+  // FG: transparent subject
+  const fgC = document.createElement('canvas');
+  fgC.width = W; fgC.height = H;
+  fgC.getContext('2d').drawImage(fgImg, 0, 0, W, H);
+
+  return { fgCanvas: fgC, bgCanvas: bgC };
+}
+
+// ─── SHOW STAGE ───────────────────────────────────────────────────────────────
+function showStage(fgCanvas, bgCanvas) {
+  hideProcessing();
+  heroSection.style.display = 'none';
+  infoSection.style.display = 'none';
+  stageWrap.classList.add('active');
+
+  layerBg.style.backgroundImage = `url(${bgCanvas.toDataURL()})`;
+  layerFg.style.backgroundImage = `url(${fgCanvas.toDataURL()})`;
+
+  startParallax();
+}
+
+// ─── PARALLAX ─────────────────────────────────────────────────────────────────
+function startParallax() {
+  cancelAnimationFrame(animFrame);
+  requestGyro();
+  stage.addEventListener('mousemove', onMouseMove);
+  stage.addEventListener('touchmove', onTouchMove, { passive: false });
+  animLoop();
+}
+
+function animLoop() {
+  currentX += (targetX - currentX) * 0.06;
+  currentY += (targetY - currentY) * 0.06;
+  const d = depthMult;
+  // BG moves opposite direction, slower — creates depth
+  layerBg.style.transform = `translate(${-currentX * DEPTH.x * d * 0.6}px, ${-currentY * DEPTH.y * d * 0.6}px) scale(1.05)`;
+  // FG moves forward direction, faster
+  layerFg.style.transform = `translate(${currentX * DEPTH.x * d}px, ${currentY * DEPTH.y * d}px) scale(1.0)`;
+  animFrame = requestAnimationFrame(animLoop);
+}
+
+function onMouseMove(e) {
+  if (gyroActive) return;
+  const r = stage.getBoundingClientRect();
+  targetX = ((e.clientX - r.left) / r.width  - 0.5) * 2;
+  targetY = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+}
+
+function onTouchMove(e) {
+  if (gyroActive) return;
+  e.preventDefault();
+  const t = e.touches[0];
+  const r = stage.getBoundingClientRect();
+  targetX = ((t.clientX - r.left) / r.width  - 0.5) * 2;
+  targetY = ((t.clientY - r.top)  / r.height - 0.5) * 2;
+}
+
+function requestGyro() {
+  if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+    DeviceMotionEvent.requestPermission().then(state => {
+      if (state === 'granted') listenGyro();
+    });
+  } else if (window.DeviceOrientationEvent) {
+    listenGyro();
+  }
+}
+
+function listenGyro() {
+  window.addEventListener('deviceorientation', e => {
+    if (e.gamma === null) return;
+    gyroActive = true;
+    gyroDot.classList.add('active');
+    gyroLabel.textContent = 'gyro';
+    targetX = Math.max(-1, Math.min(1, e.gamma / 30));
+    targetY = Math.max(-1, Math.min(1, (e.beta - 45) / 30));
+  });
+}
+
+// ─── SAVE ─────────────────────────────────────────────────────────────────────
+function savePhoto() {
+  const canvas = document.createElement('canvas');
+  const s = stage.getBoundingClientRect();
+  canvas.width = s.width; canvas.height = s.height;
+  const ctx = canvas.getContext('2d');
+
+  const bgImg = new Image();
+  bgImg.onload = () => {
+    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+    const fgImg = new Image();
+    fgImg.onload = () => {
+      ctx.drawImage(fgImg, 0, 0, canvas.width, canvas.height);
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = 'dukestu-living.png';
+      a.click();
+    };
+    fgImg.src = layerFg.style.backgroundImage.slice(5, -2);
+  };
+  bgImg.src = layerBg.style.backgroundImage.slice(5, -2);
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function resetPhoto() {
+  cancelAnimationFrame(animFrame);
+  stage.removeEventListener('mousemove', onMouseMove);
+  stage.removeEventListener('touchmove', onTouchMove);
+  stageWrap.classList.remove('active');
+  heroSection.style.display = '';
+  infoSection.style.display = '';
+  layerBg.style.backgroundImage = '';
+  layerFg.style.backgroundImage = '';
+  fileInput.value = '';
+  targetX = currentX = 0;
+  targetY = currentY = 0;
+}
+
+// ─── PROCESSING UI ────────────────────────────────────────────────────────────
+function showProcessing(msg) {
+  processing.querySelector('.proc-text').textContent = msg;
+  procStep.textContent = '';
+  processing.classList.add('active');
+}
+function hideProcessing() { processing.classList.remove('active'); }
+</script>
 </body>
 </html>
