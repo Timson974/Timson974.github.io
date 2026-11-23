@@ -2,777 +2,678 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Office Detector</title>
-<meta name="theme-color" content="#0a0c14">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timson974 — Project Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ── Design system (matches NVRisk Pro) ───────────────────────────────── */
-:root{
-  --bg:#0a0c14; --surface:#111827; --border:#1e2235;
-  --accent:#6366f1; --accent2:#a5b4fc;
-  --ok:#22c55e; --warn:#f59e0b; --danger:#ef4444;
-  --text:#e2e8f0; --muted:#94a3b8;
-  --radius:12px; --radius-sm:8px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;overflow-x:hidden}
+  :root {
+    --bg: #0d0f14;
+    --surface: #161920;
+    --surface2: #1e2130;
+    --border: #2a2f45;
+    --accent: #6366f1;
+    --accent2: #8b5cf6;
+    --accent3: #06b6d4;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --green: #10b981;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --pink: #ec4899;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
 
-/* ── Nav ──────────────────────────────────────────────────────────────── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  display:flex;align-items:center;gap:10px;
-  padding:0 16px;height:56px;
-  background:rgba(10,12,20,.92);backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-}
-nav img{border-radius:var(--radius-sm)}
-nav .title{font-weight:700;font-size:17px;letter-spacing:.01em;flex:1}
-nav .title span{color:var(--accent2)}
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #0d0f14 0%, #161228 50%, #0d1420 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 32px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99,102,241,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(99,102,241,0.12);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #a5b4fc;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .header-badge::before { content: '◉'; font-size: 8px; color: var(--green); }
+  h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #e2e8f0 0%, #a5b4fc 50%, #67e8f9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .header-sub {
+    font-size: 15px;
+    color: var(--text2);
+    max-width: 540px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
 
-/* lang switcher */
-.lang-switcher{display:flex;gap:4px}
-.lang-btn{
-  padding:4px 9px;border-radius:6px;border:1px solid var(--border);
-  background:transparent;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;
-  transition:background .15s,color .15s;
-}
-.lang-btn:hover{background:var(--border);color:var(--text)}
-.lang-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  /* FILTERS */
+  .filters {
+    display: flex;
+    gap: 8px;
+    padding: 24px 32px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .filter-btn {
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text2);
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--text); }
+  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; font-weight: 500; }
 
-/* ── Layout ───────────────────────────────────────────────────────────── */
-main{padding:72px 16px 32px;max-width:800px;margin:0 auto}
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+    padding: 28px 32px 0;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
 
-/* ── Camera / preview ─────────────────────────────────────────────────── */
-.camera-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-  overflow:hidden;position:relative;
-}
-#preview{
-  width:100%;max-height:60vh;object-fit:contain;
-  background:#000;display:block;border-radius:var(--radius) var(--radius) 0 0;
-}
-#canvas{display:none}
+  /* CARD */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(99,102,241,0.4);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(99,102,241,0.1);
+  }
+  .card-header {
+    padding: 20px 20px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .card-title-block { flex: 1; min-width: 0; }
+  .card-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .card-client {
+    font-size: 11px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .card-status {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .status-live { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
+  .status-dev { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
+  .status-planned { background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.25); }
 
-/* overlaid labels */
-#overlay{
-  position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
-}
+  .card-body { padding: 16px 20px; flex: 1; }
+  .card-desc {
+    font-size: 13.5px;
+    color: var(--text2);
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
 
-.camera-toolbar{
-  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
-  padding:12px 16px;background:var(--surface);
-}
+  /* Tags */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .tag {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+  }
+  .tag-tech { background: rgba(6,182,212,0.1); color: #67e8f9; border: 1px solid rgba(6,182,212,0.2); }
+  .tag-pwa { background: rgba(139,92,246,0.1); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.2); }
+  .tag-ai { background: rgba(245,158,11,0.1); color: #fcd34d; border: 1px solid rgba(245,158,11,0.2); }
+  .tag-web { background: rgba(16,185,129,0.1); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.2); }
 
-/* ── Buttons ──────────────────────────────────────────────────────────── */
-.btn{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:9px 18px;border-radius:var(--radius-sm);
-  border:none;font-weight:600;font-size:14px;cursor:pointer;
-  transition:opacity .15s,transform .1s;
-}
-.btn:active{transform:scale(.96)}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-secondary{background:var(--border);color:var(--text)}
-.btn-danger{background:var(--danger);color:#fff}
-.btn:disabled{opacity:.4;pointer-events:none}
+  /* Files section */
+  .files-section { margin-bottom: 14px; }
+  .files-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .files-list { display: flex; flex-wrap: wrap; gap: 5px; }
+  .file-chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text2);
+  }
+  .file-chip .fi { font-size: 10px; opacity: 0.7; }
 
-/* file upload */
-#file-input{display:none}
-.upload-label{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:9px 18px;border-radius:var(--radius-sm);
-  background:var(--border);color:var(--text);
-  font-weight:600;font-size:14px;cursor:pointer;
-  transition:background .15s;
-}
-.upload-label:hover{background:#2a2f4a}
+  /* Card footer */
+  .card-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .repo-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text3);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    transition: color 0.2s;
+  }
+  .repo-link:hover { color: var(--accent); }
+  .live-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .live-btn:hover { opacity: 0.85; transform: scale(0.98); }
+  .live-btn.disabled {
+    background: var(--surface2);
+    color: var(--text3);
+    cursor: default;
+    pointer-events: none;
+  }
 
-/* ── Status bar ───────────────────────────────────────────────────────── */
-#status{
-  margin-top:12px;padding:10px 14px;border-radius:var(--radius-sm);
-  background:var(--border);font-size:13px;color:var(--muted);min-height:38px;
-  display:flex;align-items:center;gap:8px;
-}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0}
-.dot.ok{background:var(--ok)}
-.dot.warn{background:var(--warn)}
-.dot.busy{background:var(--accent);animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  /* Expand toggle */
+  .expand-btn {
+    background: none;
+    border: none;
+    color: var(--text3);
+    font-size: 12px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .expand-btn:hover { background: var(--surface2); color: var(--text2); }
+  .readme-panel {
+    display: none;
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    background: rgba(13,15,20,0.5);
+  }
+  .readme-panel.open { display: block; }
+  .readme-content {
+    font-size: 12.5px;
+    color: var(--text2);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .readme-content h3 {
+    color: var(--accent);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 12px 0 6px;
+  }
+  .readme-content h3:first-child { margin-top: 0; }
 
-/* ── Results grid ─────────────────────────────────────────────────────── */
-.results-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
-  gap:10px;margin-top:16px;
-}
-.obj-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-  padding:14px 12px;text-align:center;
-  transition:border-color .2s,transform .2s;
-}
-.obj-card:hover{border-color:var(--accent2);transform:translateY(-2px)}
-.obj-card .emoji{font-size:32px;margin-bottom:6px}
-.obj-card .name{font-size:13px;font-weight:600;color:var(--accent2)}
-.obj-card .count{font-size:28px;font-weight:800;color:var(--text)}
-.obj-card .conf{font-size:11px;color:var(--muted);margin-top:2px}
+  /* hidden for filter */
+  .card.hidden { display: none; }
 
-/* ── Detection list ───────────────────────────────────────────────────── */
-#det-list{margin-top:16px}
-.det-row{
-  display:flex;align-items:center;gap:10px;
-  padding:8px 12px;border-bottom:1px solid var(--border);
-  font-size:13px;
-}
-.det-row:last-child{border-bottom:none}
-.det-name{flex:1;font-weight:600}
-.det-conf{color:var(--accent2);font-size:12px}
-.badge{
-  padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;
-  background:rgba(99,102,241,.18);color:var(--accent2);
-}
-
-/* ── History ──────────────────────────────────────────────────────────── */
-.section-title{
-  margin:24px 0 10px;font-size:13px;font-weight:700;
-  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
-}
-#history-list{display:flex;flex-direction:column;gap:6px}
-.hist-row{
-  display:flex;align-items:center;gap:10px;
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);
-  padding:8px 12px;font-size:12px;
-}
-.hist-row img{width:48px;height:48px;object-fit:cover;border-radius:6px;flex-shrink:0}
-.hist-info{flex:1}
-.hist-time{color:var(--muted);font-size:11px}
-
-/* ── Responsive ───────────────────────────────────────────────────────── */
-@media(max-width:480px){
-  .results-grid{grid-template-columns:repeat(2,1fr)}
-  nav .title{font-size:15px}
-}
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; padding: 16px; }
+    header { padding: 32px 16px 28px; }
+    .filters { padding: 16px 16px 0; }
+    .stats-row { gap: 20px; }
+  }
 </style>
 </head>
 <body>
 
-<!-- ── Navigation ──────────────────────────────────────────────────────── -->
-<nav>
-  <img src="icons/icon-192.png" width="32" height="32" alt="OD">
-  <span class="title">Office <span>Detector</span></span>
-  <div class="lang-switcher">
-    <button class="lang-btn active" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" onclick="setLang('ru')">RU</button>
-    <button class="lang-btn" onclick="setLang('kz')">ҚАЗ</button>
+<header>
+  <div class="header-badge">Timson974 · GitHub Portfolio</div>
+  <h1>Project Catalog</h1>
+  <p class="header-sub">PWA apps, AI tools & web projects by Timur Utepov — deployed on GitHub Pages</p>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Projects</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Live PWAs</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Clients</div></div>
+    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Live</div></div>
   </div>
-</nav>
+</header>
 
-<main>
+<div class="filters">
+  <button class="filter-btn active" onclick="filter('all', this)">All</button>
+  <button class="filter-btn" onclick="filter('pwa', this)">PWA</button>
+  <button class="filter-btn" onclick="filter('ai', this)">AI / ML</button>
+  <button class="filter-btn" onclick="filter('bakery', this)">Flourish Craft Bakery</button>
+  <button class="filter-btn" onclick="filter('uwl', this)">UWL</button>
+  <button class="filter-btn" onclick="filter('uai', this)">UAI</button>
+</div>
 
-  <!-- ── Camera / image panel ──────────────────────────────────────────── -->
-  <div class="camera-card">
-    <video id="preview" autoplay playsinline muted></video>
-    <canvas id="canvas"></canvas>
-    <div class="camera-toolbar">
-      <button class="btn btn-primary" id="btn-cam" onclick="toggleCamera()">
-        📷 <span data-i18n="open_camera">Open Camera</span>
-      </button>
-      <label class="upload-label">
-        📁 <span data-i18n="upload_photo">Upload Photo</span>
-        <input type="file" id="file-input" accept="image/*" onchange="loadFile(event)">
-      </label>
-      <button class="btn btn-secondary" id="btn-detect" onclick="runDetection()" disabled>
-        🔍 <span data-i18n="detect">Detect</span>
-      </button>
-      <button class="btn btn-secondary" id="btn-capture" onclick="captureFrame()" style="display:none">
-        📸 <span data-i18n="capture">Capture &amp; Detect</span>
-      </button>
+<div class="grid" id="grid">
+
+  <!-- 1. NVRisk Pro -->
+  <div class="card" data-tags="pwa uwl">
+    <div class="card-header">
+      <div class="card-icon" style="background: linear-gradient(135deg,#1e1b4b,#312e81)">🔊</div>
+      <div class="card-title-block">
+        <div class="card-name">NVRisk Pro — Noise &amp; Vibration</div>
+        <div class="card-client">Client: University of West London (UWL)</div>
+      </div>
+      <span class="card-status status-live">Live</span>
+    </div>
+    <div class="card-body">
+      <p class="card-desc">Industrial noise &amp; vibration risk assessment tool. Calculates LEP,d exposure levels, vibration magnitudes, compliance with Control of Noise at Work Regulations 2005 and Control of Vibration at Work Regulations 2005.</p>
+      <div class="tags">
+        <span class="tag tag-pwa">PWA</span>
+        <span class="tag tag-tech">HTML/CSS/JS</span>
+        <span class="tag tag-tech">Standalone</span>
+        <span class="tag tag-web">HSE Compliance</span>
+      </div>
+      <div class="files-section">
+        <div class="files-label">Contents</div>
+        <div class="files-list">
+          <span class="file-chip"><span class="fi">📄</span>index.html</span>
+          <span class="file-chip"><span class="fi">📋</span>manifest.json</span>
+          <span class="file-chip"><span class="fi">⚙️</span>sw.js</span>
+          <span class="file-chip"><span class="fi">🖼️</span>icons/</span>
+          <span class="file-chip"><span class="fi">📝</span>README.md</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <a class="repo-link" href="https://github.com/Timson974/pwa-app" target="_blank">⌥ Timson974/pwa-app</a>
+      <a class="live-btn" href="https://timson974.github.io/pwa-app/" target="_blank">↗ Open App</a>
+    </div>
+    <button class="expand-btn" style="margin:0 20px 12px; align-self:flex-start" onclick="toggleReadme(this)">▸ README</button>
+    <div class="readme-panel">
+      <div class="readme-content"><h3>About</h3>Noise & Vibration risk assessment PWA for occupational health professionals. Developed as a final-year project at UWL.
+
+<h3>Features</h3>• LEP,d daily noise exposure calculator
+• Hand-arm &amp; whole-body vibration (HAV/WBV)
+• UK regulations compliance check
+• Offline-ready via Service Worker
+• Installable as desktop/mobile PWA
+
+<h3>Stack</h3>Single-file HTML · Vanilla JS · CSS · Service Worker
+
+<h3>Deployment</h3>GitHub Pages → timson974.github.io/pwa-app/</div>
     </div>
   </div>
 
-  <!-- ── Status ─────────────────────────────────────────────────────────── -->
-  <div id="status">
-    <div class="dot" id="status-dot"></div>
-    <span id="status-text" data-i18n="status_ready">Ready — open camera or upload a photo</span>
-  </div>
-
-  <!-- ── Results grid ───────────────────────────────────────────────────── -->
-  <div id="results-grid" class="results-grid" style="display:none"></div>
-
-  <!-- ── Detection list ─────────────────────────────────────────────────── -->
-  <div id="det-list" style="display:none">
-    <div class="section-title" data-i18n="detections_title">Detected Objects</div>
-    <div id="det-rows"></div>
-  </div>
-
-  <!-- ── History ────────────────────────────────────────────────────────── -->
-  <div id="history-section" style="display:none">
-    <div class="section-title" data-i18n="history_title">History</div>
-    <div id="history-list"></div>
-  </div>
-
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/ort.min.js" crossorigin="anonymous"></script>
-<script>
-// ── i18n ──────────────────────────────────────────────────────────────────────
-const I18N = {
-  en: {
-    open_camera:    "Open Camera",
-    close_camera:   "Close Camera",
-    upload_photo:   "Upload Photo",
-    detect:         "Detect",
-    capture:        "Capture & Detect",
-    status_ready:   "Ready — open camera or upload a photo",
-    status_cam:     "Camera active — tap Capture & Detect",
-    status_busy:    "Detecting…",
-    status_done:    "Found {n} object(s) in {ms} ms",
-    status_none:    "No objects found — try another photo",
-    status_err:     "Error: {msg}",
-    detections_title: "Detected Objects",
-    history_title:  "History",
-    obj_names: {
-      laptop:       "Laptop",
-      keyboard:     "Keyboard",
-      mouse:        "Mouse",
-      "cell phone": "Phone",
-      cup:          "Cup",
-      monitor:      "Monitor",
-      tv:           "Monitor/TV",
-      book:         "Book",
-      chair:        "Chair",
-      bottle:       "Bottle",
-    },
-  },
-  ru: {
-    open_camera:    "Открыть камеру",
-    close_camera:   "Закрыть камеру",
-    upload_photo:   "Загрузить фото",
-    detect:         "Определить",
-    capture:        "Снять и определить",
-    status_ready:   "Готово — откройте камеру или загрузите фото",
-    status_cam:     "Камера активна — нажмите «Снять и определить»",
-    status_busy:    "Определение…",
-    status_done:    "Найдено объектов: {n} за {ms} мс",
-    status_none:    "Объекты не найдены — попробуйте другое фото",
-    status_err:     "Ошибка: {msg}",
-    detections_title: "Обнаруженные объекты",
-    history_title:  "История",
-    obj_names: {
-      laptop:       "Ноутбук",
-      keyboard:     "Клавиатура",
-      mouse:        "Мышь",
-      "cell phone": "Телефон",
-      cup:          "Чашка",
-      monitor:      "Монитор",
-      tv:           "Монитор/ТВ",
-      book:         "Книга",
-      chair:        "Стул",
-      bottle:       "Бутылка",
-    },
-  },
-  kz: {
-    open_camera:    "Камераны ашу",
-    close_camera:   "Камераны жабу",
-    upload_photo:   "Суретті жүктеу",
-    detect:         "Анықтау",
-    capture:        "Суретке алып анықтау",
-    status_ready:   "Дайын — камераны ашыңыз немесе сурет жүктеңіз",
-    status_cam:     "Камера белсенді — «Суретке алып анықтау» түймесін басыңыз",
-    status_busy:    "Анықталуда…",
-    status_done:    "{n} объект табылды, {ms} мс",
-    status_none:    "Объектілер табылмады — басқа сурет қолданып көріңіз",
-    status_err:     "Қате: {msg}",
-    detections_title: "Анықталған объектілер",
-    history_title:  "Тарих",
-    obj_names: {
-      laptop:       "Ноутбук",
-      keyboard:     "Пернетақта",
-      mouse:        "Тінтуір",
-      "cell phone": "Телефон",
-      cup:          "Кесе",
-      monitor:      "Монитор",
-      tv:           "Монитор/ТД",
-      book:         "Кітап",
-      chair:        "Орындық",
-      bottle:       "Бутылка",
-    },
-  },
-};
-
-let currentLang = 'en';
-
-function t(key, vars = {}) {
-  const dict = I18N[currentLang] || I18N.en;
-  let s = dict[key] || I18N.en[key] || key;
-  for (const [k, v] of Object.entries(vars)) s = s.replaceAll(`{${k}}`, v);
-  return s;
-}
-
-function setLang(lang) {
-  currentLang = lang;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    el.textContent = t(el.dataset.i18n);
-  });
-  document.querySelectorAll('.lang-btn').forEach(b => {
-    const bl = b.textContent.trim().toLowerCase();
-    b.classList.toggle('active',
-      (lang === 'en' && bl === 'en') ||
-      (lang === 'ru' && bl === 'ru') ||
-      (lang === 'kz' && bl === 'ҚАЗ'.toLowerCase())
-    );
-  });
-  // Re-render results if present
-  if (lastDetections.length) renderResults(lastDetections, lastLatency);
-}
-
-// ── Object emoji map ──────────────────────────────────────────────────────────
-const EMOJIS = {
-  laptop: '💻', keyboard: '⌨️', mouse: '🖱️', 'cell phone': '📱',
-  cup: '☕', monitor: '🖥️', tv: '📺', book: '📚',
-  chair: '🪑', bottle: '🍶', person: '🧑', backpack: '🎒',
-};
-function emoji(name) { return EMOJIS[name.toLowerCase()] || '📦'; }
-
-// ── COCO office classes (what the browser model knows) ────────────────────────
-const OFFICE_CLASSES = new Set([
-  'laptop','keyboard','mouse','cell phone','cup','monitor','tv',
-  'book','chair','bottle','backpack','clock','scissors','vase',
-]);
-
-// ── State ─────────────────────────────────────────────────────────────────────
-let stream = null;
-let imageData = null;   // current image as HTMLImageElement
-let lastDetections = [];
-let lastLatency    = 0;
-const history      = [];
-
-// ── Camera ────────────────────────────────────────────────────────────────────
-async function toggleCamera() {
-  if (stream) return stopCamera();
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
-    });
-    const vid = document.getElementById('preview');
-    vid.srcObject = stream;
-    vid.style.display = 'block';
-    document.getElementById('btn-cam').innerHTML =
-      `📷 <span data-i18n="close_camera">${t('close_camera')}</span>`;
-    document.getElementById('btn-capture').style.display = '';
-    document.getElementById('btn-detect').disabled = false;
-    setStatus('status_cam', '', 'ok');
-  } catch(e) {
-    setStatus('status_err', {msg: e.message}, 'warn');
-  }
-}
-
-function stopCamera() {
-  if (!stream) return;
-  stream.getTracks().forEach(t => t.stop());
-  stream = null;
-  const vid = document.getElementById('preview');
-  vid.srcObject = null;
-  document.getElementById('btn-cam').innerHTML =
-    `📷 <span data-i18n="open_camera">${t('open_camera')}</span>`;
-  document.getElementById('btn-capture').style.display = 'none';
-}
-
-function captureFrame() {
-  const vid = document.getElementById('preview');
-  const canvas = document.getElementById('canvas');
-  canvas.width  = vid.videoWidth  || 640;
-  canvas.height = vid.videoHeight || 480;
-  canvas.getContext('2d').drawImage(vid, 0, 0, canvas.width, canvas.height);
-  canvas.toBlob(blob => {
-    if (!blob) return;
-    imageData = blob;
-    runDetection();
-  }, 'image/jpeg', 0.9);
-}
-
-function loadFile(ev) {
-  const file = ev.target.files[0];
-  if (!file) return;
-  imageData = file;
-  const url = URL.createObjectURL(file);
-  const vid = document.getElementById('preview');
-  // Show as image
-  if (!vid.paused && stream) stopCamera();
-  // Render preview
-  const img = new Image();
-  img.onload = () => {
-    const canvas = document.getElementById('canvas');
-    canvas.width = img.naturalWidth;
-    canvas.height = img.naturalHeight;
-    canvas.getContext('2d').drawImage(img, 0, 0);
-    // Replace video with canvas for preview
-    vid.style.display = 'none';
-    canvas.style.display = 'block';
-    canvas.style.maxHeight = '60vh';
-    canvas.style.width = '100%';
-    canvas.style.objectFit = 'contain';
-  };
-  img.src = url;
-  document.getElementById('btn-detect').disabled = false;
-  setStatus('status_ready', '', '');
-}
-
-// ── Run detection (browser-side COCO via ONNX / fallback simulation) ─────────
-async function runDetection() {
-  if (!imageData && !stream) return;
-  if (stream) return captureFrame();
-
-  setStatus('status_busy', '', 'busy');
-  document.getElementById('btn-detect').disabled = true;
-  document.getElementById('results-grid').style.display = 'none';
-  document.getElementById('det-list').style.display = 'none';
-
-  const t0 = performance.now();
-
-  try {
-    // Check if SiteGuard API is available
-    const apiUrl = window.SITEGUARD_API || localStorage.getItem('siteguard_api') || '';
-    let detections;
-
-    if (apiUrl) {
-      detections = await detectViaAPI(apiUrl, imageData);
-    } else {
-      // Browser-only: simulate COCO detection (placeholder until model loaded)
-      detections = await detectBrowser(imageData);
-    }
-
-    const ms = Math.round(performance.now() - t0);
-    lastDetections = detections;
-    lastLatency    = ms;
-
-    if (!detections.length) {
-      setStatus('status_none', '', 'warn');
-    } else {
-      setStatus('status_done', {n: detections.length, ms}, 'ok');
-      renderResults(detections, ms);
-      addHistory(imageData, detections, ms);
-    }
-  } catch(e) {
-    setStatus('status_err', {msg: e.message}, 'warn');
-  }
-
-  document.getElementById('btn-detect').disabled = false;
-}
-
-// ── API-based detection (when SiteGuard backend is running) ───────────────────
-async function detectViaAPI(apiUrl, imageBlob) {
-  const form = new FormData();
-  form.append('file', imageBlob, 'photo.jpg');
-  form.append('camera_id', 'pwa_office');
-  form.append('save', 'true');
-  form.append('annotate', 'false');
-
-  const res = await fetch(`${apiUrl}/detect/office`, {method: 'POST', body: form});
-  if (!res.ok) throw new Error(`API ${res.status}`);
-  const data = await res.json();
-  return data.detections || [];
-}
-
-// ── COCO class names (YOLOv8n trained on COCO 80 classes) ────────────────────
-const COCO_CLASSES = [
-  'person','bicycle','car','motorcycle','airplane','bus','train','truck','boat',
-  'traffic light','fire hydrant','stop sign','parking meter','bench','bird','cat',
-  'dog','horse','sheep','cow','elephant','bear','zebra','giraffe','backpack',
-  'umbrella','handbag','tie','suitcase','frisbee','skis','snowboard','sports ball',
-  'kite','baseball bat','baseball glove','skateboard','surfboard','tennis racket',
-  'bottle','wine glass','cup','fork','knife','spoon','bowl','banana','apple',
-  'sandwich','orange','broccoli','carrot','hot dog','pizza','donut','cake','chair',
-  'couch','potted plant','bed','dining table','toilet','tv','laptop','mouse',
-  'remote','keyboard','cell phone','microwave','oven','toaster','sink',
-  'refrigerator','book','clock','vase','scissors','teddy bear','hair drier','toothbrush'
-];
-
-// ── Browser-only detection: real YOLOv8n ONNX ────────────────────────────────
-const MODEL_URL = 'https://cdn.jsdelivr.net/gh/Timson974/office-detector@main/yolov8n.onnx';
-const MODEL_FALLBACK = 'https://huggingface.co/datasets/Xenova/transformers.js-docs/resolve/main/yolov8n.onnx';
-let ortSession = null;
-let modelLoading = false;
-let modelError = null;
-
-async function loadModel() {
-  if (ortSession) return ortSession;
-  if (modelError) throw new Error(modelError);
-  if (modelLoading) {
-    // Wait for existing load
-    while (modelLoading) await new Promise(r => setTimeout(r, 100));
-    if (modelError) throw new Error(modelError);
-    return ortSession;
-  }
-  modelLoading = true;
-  try {
-    ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/';
-    setStatus('status_busy', '', 'busy');
-    document.getElementById('status-bar').querySelector('.status-text').textContent =
-      '⬇️ Loading AI model (~6MB)…';
-    ortSession = await ort.InferenceSession.create(MODEL_FALLBACK, {
-      executionProviders: ['wasm'],
-    });
-    modelLoading = false;
-    return ortSession;
-  } catch(e) {
-    modelError = 'Model load failed: ' + e.message;
-    modelLoading = false;
-    throw new Error(modelError);
-  }
-}
-
-async function imageToTensor(imageBlob) {
-  const img = new Image();
-  const url = URL.createObjectURL(imageBlob);
-  await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = url; });
-  URL.revokeObjectURL(url);
-
-  const SIZE = 640;
-  const canvas = document.createElement('canvas');
-  canvas.width = canvas.height = SIZE;
-  const ctx = canvas.getContext('2d');
-  // letterbox: draw image centered with black padding
-  const scale = Math.min(SIZE / img.width, SIZE / img.height);
-  const dw = (SIZE - img.width * scale) / 2;
-  const dh = (SIZE - img.height * scale) / 2;
-  ctx.fillStyle = '#000';
-  ctx.fillRect(0, 0, SIZE, SIZE);
-  ctx.drawImage(img, dw, dh, img.width * scale, img.height * scale);
-
-  const pixels = ctx.getImageData(0, 0, SIZE, SIZE).data;
-  const float32 = new Float32Array(3 * SIZE * SIZE);
-  for (let i = 0; i < SIZE * SIZE; i++) {
-    float32[i]              = pixels[i*4]   / 255; // R
-    float32[i + SIZE*SIZE]  = pixels[i*4+1] / 255; // G
-    float32[i + SIZE*SIZE*2]= pixels[i*4+2] / 255; // B
-  }
-  return { tensor: new ort.Tensor('float32', float32, [1, 3, SIZE, SIZE]),
-           scale, dw, dh, origW: img.width, origH: img.height };
-}
-
-function nms(boxes, iouThreshold = 0.45) {
-  boxes.sort((a, b) => b.confidence - a.confidence);
-  const keep = [];
-  const suppressed = new Array(boxes.length).fill(false);
-  for (let i = 0; i < boxes.length; i++) {
-    if (suppressed[i]) continue;
-    keep.push(boxes[i]);
-    for (let j = i + 1; j < boxes.length; j++) {
-      if (suppressed[j]) continue;
-      const iou = computeIoU(boxes[i], boxes[j]);
-      if (iou > iouThreshold) suppressed[j] = true;
-    }
-  }
-  return keep;
-}
-
-function computeIoU(a, b) {
-  const ix1 = Math.max(a.x1, b.x1), iy1 = Math.max(a.y1, b.y1);
-  const ix2 = Math.min(a.x2, b.x2), iy2 = Math.min(a.y2, b.y2);
-  const inter = Math.max(0, ix2-ix1) * Math.max(0, iy2-iy1);
-  const aA = (a.x2-a.x1)*(a.y2-a.y1), bA = (b.x2-b.x1)*(b.y2-b.y1);
-  return inter / (aA + bA - inter + 1e-6);
-}
-
-async function detectBrowser(imageBlob) {
-  if (typeof ort === 'undefined') return simulateDetection();
-
-  try {
-    const session = await loadModel();
-    const { tensor, scale, dw, dh, origW, origH } = await imageToTensor(imageBlob);
-
-    const feeds = { images: tensor };
-    const results = await session.run(feeds);
-    // YOLOv8 output: [1, 84, 8400] — 84 = 4 box + 80 classes
-    const output = results[Object.keys(results)[0]].data;
-    const NUM_BOXES = 8400;
-    const NUM_CLASSES = 80;
-
-    const boxes = [];
-    const CONF_THRESH = 0.35;
-
-    for (let i = 0; i < NUM_BOXES; i++) {
-      // find best class
-      let maxConf = 0, maxCls = 0;
-      for (let c = 0; c < NUM_CLASSES; c++) {
-        const conf = output[4 * NUM_BOXES + c * NUM_BOXES + i];
-        if (conf > maxConf) { maxConf = conf; maxCls = c; }
-      }
-      if (maxConf < CONF_THRESH) continue;
-
-      const className = COCO_CLASSES[maxCls] || `class_${maxCls}`;
-      if (!OFFICE_CLASSES.has(className)) continue; // only office objects
-
-      // cx, cy, w, h in 640×640 space
-      const cx = output[0 * NUM_BOXES + i];
-      const cy = output[1 * NUM_BOXES + i];
-      const w  = output[2 * NUM_BOXES + i];
-      const h  = output[3 * NUM_BOXES + i];
-
-      // Convert to original image coords
-      const x1 = ((cx - w/2) - dw) / scale;
-      const y1 = ((cy - h/2) - dh) / scale;
-      const x2 = ((cx + w/2) - dw) / scale;
-      const y2 = ((cy + h/2) - dh) / scale;
-
-      boxes.push({
-        class_name: className,
-        confidence: maxConf,
-        x1: Math.max(0, x1), y1: Math.max(0, y1),
-        x2: Math.min(origW, x2), y2: Math.min(origH, y2),
-        detection_type: 'office',
-      });
-    }
-
-    const finalBoxes = nms(boxes);
-    if (!finalBoxes.length) return [];
-
-    // Draw bounding boxes on the canvas
-    drawBoxes(finalBoxes, origW, origH);
-    return finalBoxes;
-
-  } catch(e) {
-    console.warn('ONNX error, falling back to simulation:', e);
-    return simulateDetection();
-  }
-}
-
-function drawBoxes(boxes, origW, origH) {
-  const canvas = document.getElementById('canvas');
-  if (!canvas || canvas.style.display === 'none') return;
-  const scaleX = canvas.width  / origW;
-  const scaleY = canvas.height / origH;
-  const ctx = canvas.getContext('2d');
-  for (const b of boxes) {
-    const x = b.x1 * scaleX, y = b.y1 * scaleY;
-    const w = (b.x2 - b.x1) * scaleX, h = (b.y2 - b.y1) * scaleY;
-    ctx.strokeStyle = '#6366f1';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(x, y, w, h);
-    const label = `${emoji(b.class_name)} ${b.class_name} ${Math.round(b.confidence*100)}%`;
-    ctx.fillStyle = 'rgba(99,102,241,0.85)';
-    ctx.fillRect(x, y - 20, ctx.measureText(label).width + 8, 20);
-    ctx.fillStyle = '#fff';
-    ctx.font = '13px Inter,sans-serif';
-    ctx.fillText(label, x + 4, y - 5);
-  }
-}
-
-// Demo simulation for when no model/API is available
-function simulateDetection() {
-  // Returns plausible random objects so the UI is usable offline
-  const pool = ['laptop','keyboard','mouse','cup','cell phone','monitor'];
-  const n = 2 + Math.floor(Math.random() * 3);
-  const result = [];
-  const used = new Set();
-  while (result.length < n) {
-    const cls = pool[Math.floor(Math.random() * pool.length)];
-    if (used.has(cls)) continue;
-    used.add(cls);
-    result.push({
-      class_name: cls,
-      confidence: parseFloat((0.65 + Math.random() * 0.3).toFixed(2)),
-      x1: 10, y1: 10, x2: 100, y2: 100,
-      detection_type: 'office',
-    });
-  }
-  return result;
-}
-
-// ── Render ────────────────────────────────────────────────────────────────────
-function renderResults(dets, ms) {
-  // Group by class
-  const counts = {};
-  const confs  = {};
-  for (const d of dets) {
-    const k = d.class_name.toLowerCase();
-    counts[k] = (counts[k] || 0) + 1;
-    confs[k]  = (confs[k]  || 0) + d.confidence;
-  }
-
-  // Grid
-  const grid = document.getElementById('results-grid');
-  grid.innerHTML = '';
-  for (const [cls, cnt] of Object.entries(counts)) {
-    const avgConf = Math.round((confs[cls] / cnt) * 100);
-    const localName = (I18N[currentLang]?.obj_names || {})[cls] || cls;
-    grid.innerHTML += `
-      <div class="obj-card">
-        <div class="emoji">${emoji(cls)}</div>
-        <div class="name">${localName}</div>
-        <div class="count">${cnt}</div>
-        <div class="conf">${avgConf}% conf</div>
-      </div>`;
-  }
-  grid.style.display = 'grid';
-
-  // List
-  const rows = document.getElementById('det-rows');
-  rows.innerHTML = '';
-  for (const d of dets) {
-    const localName = (I18N[currentLang]?.obj_names || {})[d.class_name.toLowerCase()] || d.class_name;
-    rows.innerHTML += `
-      <div class="det-row">
-        <span style="font-size:18px">${emoji(d.class_name)}</span>
-        <span class="det-name">${localName}</span>
-        <span class="badge">${d.detection_type || 'office'}</span>
-        <span class="det-conf">${Math.round(d.confidence * 100)}%</span>
-      </div>`;
-  }
-  document.getElementById('det-list').style.display = '';
-  document.querySelector('#det-list .section-title').textContent = t('detections_title');
-}
-
-// ── History ───────────────────────────────────────────────────────────────────
-function addHistory(blob, dets, ms) {
-  const url = blob instanceof Blob ? URL.createObjectURL(blob) : null;
-  const time = new Date().toLocaleTimeString();
-  const counts = {};
-  for (const d of dets) counts[d.class_name] = (counts[d.class_name]||0)+1;
-  const summary = Object.entries(counts).map(([k,v])=>`${emoji(k)}×${v}`).join(' ');
-
-  history.unshift({url, summary, time, ms});
-  if (history.length > 10) history.pop();
-
-  const section = document.getElementById('history-section');
-  const list    = document.getElementById('history-list');
-  list.innerHTML = '';
-  for (const h of history) {
-    list.innerHTML += `
-      <div class="hist-row">
-        ${h.url ? `<img src="${h.url}" alt="">` : ''}
-        <div class="hist-info">
-          <div>${h.summary}</div>
-          <div class="hist-time">${h.time} · ${h.ms} ms</div>
+  <!-- 2. Office Detector -->
+  <div class="card" data-tags="ai pwa uai">
+    <div class="card-header">
+      <div class="card-icon" style="background: linear-gradient(135deg,#0a0c14,#1a1f35)">🖥️</div>
+      <div class="card-title-block">
+        <div class="card-name">Office Detector</div>
+        <div class="card-client">Client: UAI — University of Artificial Intelligence</div>
+      </div>
+      <span class="card-status status-live">Live</span>
+    </div>
+    <div class="card-body">
+      <p class="card-desc">Real-time object detection PWA for office environments. Uses YOLOv8n model (ONNX) to detect laptops, monitors, keyboards, phones and other office items directly in the browser — no server required.</p>
+      <div class="tags">
+        <span class="tag tag-pwa">PWA</span>
+        <span class="tag tag-ai">YOLOv8</span>
+        <span class="tag tag-ai">ONNX Runtime</span>
+        <span class="tag tag-tech">WebAssembly</span>
+        <span class="tag tag-tech">EN / RU / KAZ</span>
+      </div>
+      <div class="files-section">
+        <div class="files-label">Contents</div>
+        <div class="files-list">
+          <span class="file-chip"><span class="fi">📄</span>index.html</span>
+          <span class="file-chip"><span class="fi">📋</span>manifest.json</span>
+          <span class="file-chip"><span class="fi">⚙️</span>sw.js</span>
+          <span class="file-chip"><span class="fi">🤖</span>yolov8n.onnx</span>
+          <span class="file-chip"><span class="fi">🖼️</span>icons/</span>
+          <span class="file-chip"><span class="fi">📝</span>DEVLOG.md</span>
         </div>
-      </div>`;
+      </div>
+    </div>
+    <div class="card-footer">
+      <a class="repo-link" href="https://github.com/Timson974/office-detector" target="_blank">⌥ Timson974/office-detector</a>
+      <a class="live-btn" href="https://timson974.github.io/office-detector/" target="_blank">↗ Open App</a>
+    </div>
+    <button class="expand-btn" style="margin:0 20px 12px; align-self:flex-start" onclick="toggleReadme(this)">▸ README</button>
+    <div class="readme-panel">
+      <div class="readme-content"><h3>About</h3>Client-side AI object detection for office environments. YOLOv8n model converted to ONNX runs entirely in the browser via WebAssembly — no backend, no API calls.
+
+<h3>Features</h3>• Live camera feed detection
+• Photo upload mode
+• EN / RU / KAZ interface
+• Offline-capable PWA
+• Scope: /office-detector/ (isolated)
+
+<h3>Stack</h3>HTML · CSS · JS · ONNX Runtime Web · YOLOv8n
+
+<h3>Deployment</h3>GitHub Pages → timson974.github.io/office-detector/</div>
+    </div>
+  </div>
+
+  <!-- 3. ZhazTim Baker Pro -->
+  <div class="card" data-tags="pwa bakery">
+    <div class="card-header">
+      <div class="card-icon" style="background: linear-gradient(135deg,#1a1210,#2d1f15)">🍞</div>
+      <div class="card-title-block">
+        <div class="card-name">ZhazTim — Baker Pro</div>
+        <div class="card-client">Client: Flourish Craft Bakery (proposal)</div>
+      </div>
+      <span class="card-status status-live">Live</span>
+    </div>
+    <div class="card-body">
+      <p class="card-desc">Professional baker's knowledge base and recipe toolkit. Named after Zhaz &amp; Tim. Covers dough hydration, fermentation times, temperature curves, scoring patterns and baking ratios for artisan breads.</p>
+      <div class="tags">
+        <span class="tag tag-pwa">PWA</span>
+        <span class="tag tag-tech">HTML/CSS/JS</span>
+        <span class="tag tag-tech">Standalone</span>
+        <span class="tag tag-web">Artisan Baking</span>
+      </div>
+      <div class="files-section">
+        <div class="files-label">Contents</div>
+        <div class="files-list">
+          <span class="file-chip"><span class="fi">📄</span>index.html</span>
+          <span class="file-chip"><span class="fi">📋</span>manifest.json</span>
+          <span class="file-chip"><span class="fi">⚙️</span>sw.js</span>
+          <span class="file-chip"><span class="fi">🖼️</span>icons/</span>
+          <span class="file-chip"><span class="fi">📝</span>README.md</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <a class="repo-link" href="https://github.com/Timson974/zhaztim" target="_blank">⌥ Timson974/zhaztim</a>
+      <a class="live-btn" href="https://timson974.github.io/zhaztim/" target="_blank">↗ Open App</a>
+    </div>
+    <button class="expand-btn" style="margin:0 20px 12px; align-self:flex-start" onclick="toggleReadme(this)">▸ README</button>
+    <div class="readme-panel">
+      <div class="readme-content"><h3>About</h3>Built from scratch as a single-file PWA. Named after the author's wife Zhaz and himself (Tim). A professional reference tool for artisan bakers.
+
+<h3>Features</h3>• Dough hydration calculator
+• Fermentation timer &amp; temperature guide
+• Scoring patterns reference
+• Baker's percentage formulas
+• Offline-first PWA
+
+<h3>Client Note</h3>Developed for personal use; proposed to Flourish Craft Bakery as a staff toolkit for consistency and training.
+
+<h3>Stack</h3>Single-file HTML · Vanilla JS · CSS · Service Worker</div>
+    </div>
+  </div>
+
+  <!-- 4. Bakery QC -->
+  <div class="card" data-tags="pwa bakery">
+    <div class="card-header">
+      <div class="card-icon" style="background: linear-gradient(135deg,#111510,#1c2416)">🔍</div>
+      <div class="card-title-block">
+        <div class="card-name">Bakery QC</div>
+        <div class="card-client">Client: Flourish Craft Bakery (proposal)</div>
+      </div>
+      <span class="card-status status-live">Live</span>
+    </div>
+    <div class="card-body">
+      <p class="card-desc">Bake quality control tool — acrylamide colour checker. Compares bread crust colour against reference standards to assess acrylamide risk. Visual, fast and usable on any device in a bakery environment.</p>
+      <div class="tags">
+        <span class="tag tag-pwa">PWA</span>
+        <span class="tag tag-tech">HTML/CSS/JS</span>
+        <span class="tag tag-web">Food Safety</span>
+        <span class="tag tag-web">QC / HACCP</span>
+      </div>
+      <div class="files-section">
+        <div class="files-label">Contents</div>
+        <div class="files-list">
+          <span class="file-chip"><span class="fi">📄</span>index.html</span>
+          <span class="file-chip"><span class="fi">📋</span>manifest.json</span>
+          <span class="file-chip"><span class="fi">🖼️</span>icons/</span>
+          <span class="file-chip"><span class="fi">📝</span>README.md</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <a class="repo-link" href="https://github.com/Timson974/bakery-qc" target="_blank">⌥ Timson974/bakery-qc</a>
+      <a class="live-btn" href="https://timson974.github.io/bakery-qc/" target="_blank">↗ Open App</a>
+    </div>
+    <button class="expand-btn" style="margin:0 20px 12px; align-self:flex-start" onclick="toggleReadme(this)">▸ README</button>
+    <div class="readme-panel">
+      <div class="readme-content"><h3>About</h3>Quality control companion for artisan bakeries. Helps staff assess acrylamide risk by comparing bake colour to calibrated reference charts — no lab equipment needed.
+
+<h3>Features</h3>• Visual colour reference scale
+• Risk level indicator (low / medium / high)
+• Camera / upload mode
+• HACCP-aligned guidance
+• Installable PWA for in-kitchen use
+
+<h3>Client Note</h3>Proposed to Flourish Craft Bakery as part of a QC toolkit alongside ZhazTim Baker Pro and Bakery Press Calculator.
+
+<h3>Stack</h3>Single-file HTML · Vanilla JS · Canvas API · CSS</div>
+    </div>
+  </div>
+
+  <!-- 5. Bakery Press Calculator -->
+  <div class="card" data-tags="pwa bakery">
+    <div class="card-header">
+      <div class="card-icon" style="background: linear-gradient(135deg,#140f08,#241a0a)">⚖️</div>
+      <div class="card-title-block">
+        <div class="card-name">Bakery Press Calculator</div>
+        <div class="card-client">Client: Flourish Craft Bakery (proposal)</div>
+      </div>
+      <span class="card-status status-live">Live</span>
+    </div>
+    <div class="card-body">
+      <p class="card-desc">Dough portioning and press calculation tool. Calculates exact dough weights, scaling factors and press settings for consistent batch production — from small artisan runs to larger commercial output.</p>
+      <div class="tags">
+        <span class="tag tag-pwa">PWA</span>
+        <span class="tag tag-tech">HTML/CSS/JS</span>
+        <span class="tag tag-web">Production</span>
+        <span class="tag tag-web">Scaling</span>
+      </div>
+      <div class="files-section">
+        <div class="files-label">Contents</div>
+        <div class="files-list">
+          <span class="file-chip"><span class="fi">📄</span>index.html</span>
+          <span class="file-chip"><span class="fi">📋</span>manifest.json</span>
+          <span class="file-chip"><span class="fi">⚙️</span>sw.js</span>
+          <span class="file-chip"><span class="fi">🖼️</span>icons/</span>
+          <span class="file-chip"><span class="fi">📝</span>README.md</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <a class="repo-link" href="https://github.com/Timson974/bakery-press" target="_blank">⌥ Timson974/bakery-press</a>
+      <a class="live-btn" href="https://timson974.github.io/bakery-press/" target="_blank">↗ Open App</a>
+    </div>
+    <button class="expand-btn" style="margin:0 20px 12px; align-self:flex-start" onclick="toggleReadme(this)">▸ README</button>
+    <div class="readme-panel">
+      <div class="readme-content"><h3>About</h3>Precision portioning calculator for bakery production lines. Reduces waste and ensures batch consistency.
+
+<h3>Features</h3>• Dough weight per unit calculator
+• Batch scaling (multiply / divide recipes)
+• Press pressure &amp; time reference
+• Unit conversion (g ↔ oz)
+• Offline PWA — works without internet
+
+<h3>Client Note</h3>Third tool in the proposed Flourish Craft Bakery PWA suite.
+
+<h3>Stack</h3>Single-file HTML · Vanilla JS · CSS · Service Worker</div>
+    </div>
+  </div>
+
+  <!-- 6. SiteGuard -->
+  <div class="card" data-tags="ai">
+    <div class="card-header">
+      <div class="card-icon" style="background: linear-gradient(135deg,#0a1a0a,#102010)">🦺</div>
+      <div class="card-title-block">
+        <div class="card-name">SiteGuard</div>
+        <div class="card-client">Personal Portfolio Project</div>
+      </div>
+      <span class="card-status status-live">Live</span>
+    </div>
+    <div class="card-body">
+      <p class="card-desc">AI-powered PPE detection system for construction sites. YOLOv8 model detects helmets, vests, gloves and other safety equipment in real time. FastAPI backend, PostgreSQL logging, Streamlit dashboard, Docker deployment.</p>
+      <div class="tags">
+        <span class="tag tag-ai">YOLOv8</span>
+        <span class="tag tag-tech">FastAPI</span>
+        <span class="tag tag-tech">PostgreSQL</span>
+        <span class="tag tag-tech">Docker</span>
+        <span class="tag tag-web">Streamlit</span>
+      </div>
+      <div class="files-section">
+        <div class="files-label">Contents</div>
+        <div class="files-list">
+          <span class="file-chip"><span class="fi">🐍</span>app/</span>
+          <span class="file-chip"><span class="fi">🤖</span>model/</span>
+          <span class="file-chip"><span class="fi">🗄️</span>db/</span>
+          <span class="file-chip"><span class="fi">🐳</span>Dockerfile</span>
+          <span class="file-chip"><span class="fi">📋</span>docker-compose.yml</span>
+          <span class="file-chip"><span class="fi">📝</span>README.md</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <a class="repo-link" href="https://github.com/Timson974/siteguard" target="_blank">⌥ Timson974/siteguard</a>
+      <a class="live-btn" href="https://github.com/Timson974/siteguard" target="_blank">↗ View Repo</a>
+    </div>
+    <button class="expand-btn" style="margin:0 20px 12px; align-self:flex-start" onclick="toggleReadme(this)">▸ README</button>
+    <div class="readme-panel">
+      <div class="readme-content"><h3>About</h3>Portfolio project demonstrating end-to-end ML engineering: custom YOLOv8 training, production API, database logging and dashboard — all containerised with Docker.
+
+<h3>Features</h3>• Real-time PPE detection (helmet, vest, gloves, boots)
+• FastAPI REST endpoint for video/image input
+• PostgreSQL event logging with timestamps
+• Streamlit compliance dashboard
+• Full Docker Compose setup
+
+<h3>Purpose</h3>Built as tangible evidence of ML engineering skills for MSc Computer Science applications and CV portfolio.
+
+<h3>Stack</h3>Python · YOLOv8 · FastAPI · PostgreSQL · Streamlit · Docker</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function filter(tag, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.card').forEach(card => {
+      if (tag === 'all') {
+        card.classList.remove('hidden');
+      } else {
+        const tags = card.dataset.tags || '';
+        card.classList.toggle('hidden', !tags.split(' ').includes(tag));
+      }
+    });
   }
-  section.style.display = '';
-  document.querySelector('#history-section .section-title').textContent = t('history_title');
-}
 
-// ── Status helpers ────────────────────────────────────────────────────────────
-function setStatus(key, vars = {}, state = '') {
-  document.getElementById('status-text').textContent = t(key, vars);
-  const dot = document.getElementById('status-dot');
-  dot.className = 'dot' + (state ? ` ${state}` : '');
-}
-
-// ── API config (let user set via URL hash or localStorage) ───────────────────
-(function() {
-  const hash = location.hash.slice(1);
-  if (hash.startsWith('api=')) {
-    const url = decodeURIComponent(hash.slice(4));
-    localStorage.setItem('siteguard_api', url);
-    location.hash = '';
+  function toggleReadme(btn) {
+    const panel = btn.nextElementSibling;
+    const open = panel.classList.toggle('open');
+    btn.textContent = (open ? '▾' : '▸') + ' README';
   }
-})();
-
-// ── Service Worker registration ───────────────────────────────────────────────
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
-}
 </script>
+
 </body>
 </html>
