@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>DukesTU — Living Photo</title>
+<meta name="theme-color" content="#0a0c14">
+<meta name="description" content="Bring your photos to life with parallax depth effect">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+  :root {
+    --bg: #0a0c14;
+    --surface: #13151f;
+    --surface2: #1a1d2e;
+    --border: #252840;
+    --accent: #6366f1;
+    --accent2: #a78bfa;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --green: #10b981;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; height: 56px;
+    background: rgba(10,12,20,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-size: 18px; font-weight: 700; letter-spacing: -.5px; }
+  .nav-logo span { color: var(--accent2); }
+  .nav-badge {
+    font-size: 11px; font-weight: 600; letter-spacing: .05em;
+    background: var(--accent); color: #fff;
+    padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    margin-top: 56px;
+    padding: 48px 24px 32px;
+    text-align: center;
+    background: linear-gradient(160deg, #0a0c14 0%, #12102a 50%, #0a1020 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(99,102,241,.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-title {
+    font-size: clamp(28px, 7vw, 48px);
+    font-weight: 800; letter-spacing: -1px;
+    background: linear-gradient(135deg, #e2e8f0, #a78bfa);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .hero-sub {
+    font-size: 15px; color: var(--text2); max-width: 320px; margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+
+  /* UPLOAD ZONE */
+  .upload-zone {
+    max-width: 480px; margin: 0 auto;
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 40px 24px;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    position: relative;
+  }
+  .upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: rgba(99,102,241,.06); }
+  .upload-icon { font-size: 48px; margin-bottom: 12px; }
+  .upload-text { font-size: 15px; color: var(--text2); margin-bottom: 8px; }
+  .upload-hint { font-size: 12px; color: var(--text3); }
+  #fileInput { display: none; }
+  .btn-upload {
+    display: inline-block; margin-top: 20px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 10px;
+    padding: 12px 28px; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: opacity .2s;
+  }
+  .btn-upload:hover { opacity: .85; }
+
+  /* MAIN STAGE */
+  .stage-wrap {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 16px 40px;
+    flex: 1;
+  }
+  .stage-wrap.active { display: flex; }
+
+  .stage {
+    width: 100%; max-width: 480px;
+    aspect-ratio: 4/3;
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    background: #000;
+    box-shadow: 0 20px 60px rgba(0,0,0,.6);
+    touch-action: none;
+  }
+  .layer {
+    position: absolute; inset: -8%;
+    width: 116%; height: 116%;
+    background-size: cover;
+    background-position: center;
+    will-change: transform;
+    transition: transform .05s linear;
+  }
+  #layerBg { z-index: 1; }
+  #layerFg { z-index: 2; }
+
+  .controls {
+    max-width: 480px; width: 100%;
+    margin-top: 20px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .control-row { display: flex; gap: 10px; }
+  .btn {
+    flex: 1; padding: 13px 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface2);
+    color: var(--text); font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: background .15s, border-color .15s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn:hover { background: var(--surface); border-color: var(--accent); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn.primary:hover { opacity: .85; }
+
+  /* DEPTH SLIDER */
+  .depth-row { display: flex; align-items: center; gap: 12px; }
+  .depth-label { font-size: 13px; color: var(--text2); white-space: nowrap; }
+  input[type=range] {
+    flex: 1; -webkit-appearance: none;
+    height: 4px; border-radius: 2px;
+    background: var(--border); outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--accent); cursor: pointer;
+  }
+
+  /* PROCESSING OVERLAY */
+  .processing {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,12,20,.92);
+    backdrop-filter: blur(8px);
+    flex-direction: column;
+    align-items: center; justify-content: center; gap: 20px;
+  }
+  .processing.active { display: flex; }
+  .spinner {
+    width: 48px; height: 48px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .proc-text { font-size: 15px; color: var(--text2); }
+  .proc-step { font-size: 13px; color: var(--text3); }
+
+  /* INFO */
+  .info-section {
+    padding: 48px 24px;
+    max-width: 480px; margin: 0 auto;
+    text-align: center;
+  }
+  .info-title { font-size: 20px; font-weight: 700; margin-bottom: 24px; }
+  .steps { display: flex; flex-direction: column; gap: 16px; text-align: left; }
+  .step { display: flex; gap: 14px; align-items: flex-start; }
+  .step-num {
+    min-width: 32px; height: 32px;
+    background: var(--accent); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700;
+  }
+  .step-text { font-size: 14px; color: var(--text2); line-height: 1.6; padding-top: 6px; }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 24px;
+    font-size: 12px; color: var(--text3);
+    border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--accent2); text-decoration: none; }
+
+  /* GYRO INDICATOR */
+  .gyro-indicator {
+    position: absolute; top: 12px; right: 12px; z-index: 10;
+    background: rgba(10,12,20,.8);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px; color: var(--text3);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .gyro-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); }
+  .gyro-dot.active { background: var(--green); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Dukes<span>TU</span></div>
+  <div class="nav-badge">Living Photo</div>
+</nav>
+
+<!-- UPLOAD STATE -->
+<div class="hero" id="heroSection">
+  <div class="hero-title">Bring Photos<br>to Life</div>
+  <div class="hero-sub">Upload any photo and watch it come alive with depth and motion</div>
+
+  <div class="upload-zone" id="dropZone">
+    <div class="upload-icon">🖼️</div>
+    <div class="upload-text">Drop your photo here</div>
+    <div class="upload-hint">JPG, PNG, WEBP — portraits work best</div>
+    <button class="btn-upload" onclick="document.getElementById('fileInput').click()">Choose Photo</button>
+    <input type="file" id="fileInput" accept="image/*">
+  </div>
+</div>
+
+<!-- STAGE STATE -->
+<div class="stage-wrap" id="stageWrap">
+  <div class="stage" id="stage">
+    <div class="layer" id="layerBg"></div>
+    <div class="layer" id="layerFg"></div>
+    <div class="gyro-indicator">
+      <div class="gyro-dot" id="gyroDot"></div>
+      <span id="gyroLabel">tilt</span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="depth-row">
+      <span class="depth-label">Depth</span>
+      <input type="range" id="depthSlider" min="5" max="40" value="20">
+    </div>
+    <div class="control-row">
+      <button class="btn" onclick="resetPhoto()">📂 New Photo</button>
+      <button class="btn primary" onclick="savePhoto()">💾 Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- INFO (shown before upload) -->
+<div class="info-section" id="infoSection">
+  <div class="info-title">How it works</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">Upload any photo — portraits, landscapes, group shots all work</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">AI separates the subject from background instantly in your browser</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">Tilt your phone or move your mouse to see the parallax depth effect</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESSING -->
+<div class="processing" id="processing">
+  <div class="spinner"></div>
+  <div class="proc-text">Creating depth map…</div>
+  <div class="proc-step" id="procStep">Loading AI model</div>
+</div>
+
+<footer>
+  DukesTU Living Photo · <a href="https://timson974.netlify.app">Portfolio</a>
+</footer>
+
+<!-- Service Worker -->
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
+<script type="module">
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const DEPTH = { x: 20, y: 20 };
+let depthMult = 1;
+let gyroActive = false;
+let currentX = 0, currentY = 0;
+let targetX = 0, targetY = 0;
+let animFrame;
+let bgRemoval = null;
+
+// ─── UI REFS ──────────────────────────────────────────────────────────────────
+const fileInput   = document.getElementById('fileInput');
+const dropZone    = document.getElementById('dropZone');
+const heroSection = document.getElementById('heroSection');
+const stageWrap   = document.getElementById('stageWrap');
+const infoSection = document.getElementById('infoSection');
+const processing  = document.getElementById('processing');
+const procStep    = document.getElementById('procStep');
+const layerBg     = document.getElementById('layerBg');
+const layerFg     = document.getElementById('layerFg');
+const depthSlider = document.getElementById('depthSlider');
+const gyroDot     = document.getElementById('gyroDot');
+const gyroLabel   = document.getElementById('gyroLabel');
+const stage       = document.getElementById('stage');
+
+// ─── DEPTH SLIDER ─────────────────────────────────────────────────────────────
+depthSlider.addEventListener('input', () => {
+  depthMult = depthSlider.value / 20;
+});
+
+// ─── FILE INPUT ───────────────────────────────────────────────────────────────
+fileInput.addEventListener('change', e => {
+  if (e.target.files[0]) handleFile(e.target.files[0]);
+});
+
+// ─── DRAG & DROP ──────────────────────────────────────────────────────────────
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('drag');
+  if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+});
+
+// ─── HANDLE FILE ──────────────────────────────────────────────────────────────
+async function handleFile(file) {
+  if (!file.type.startsWith('image/')) return;
+  showProcessing('Loading image…');
+
+  const url = URL.createObjectURL(file);
+  const img = await loadImage(url);
+
+  procStep.textContent = 'Removing background…';
+
+  try {
+    const { fgCanvas, bgCanvas } = await segmentImage(img, url);
+    showStage(fgCanvas, bgCanvas);
+  } catch(err) {
+    console.error('Segmentation failed, using fallback:', err);
+    procStep.textContent = 'Applying depth effect…';
+    const { fgCanvas, bgCanvas } = fakeSegment(img);
+    showStage(fgCanvas, bgCanvas);
+  }
+}
+
+function loadImage(url) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => res(img);
+    img.onerror = rej;
+    img.src = url;
+  });
+}
+
+// ─── SEGMENTATION (@imgly/background-removal) ────────────────────────────────
+async function segmentImage(img, originalUrl) {
+  if (!bgRemoval) {
+    procStep.textContent = 'Loading AI model (first time only, ~5MB)…';
+    const mod = await import(
+      'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/dist/background-removal.js'
+    );
+    bgRemoval = mod.removeBackground;
+  }
+
+  procStep.textContent = 'Separating subject from background…';
+
+  // removeBackground returns a Blob — transparent PNG with subject
+  const fgBlob = await bgRemoval(originalUrl, {
+    publicPath: 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/dist/',
+    fetchArgs: { mode: 'cors' },
+    progress: (key, cur, total) => {
+      if (total > 0) procStep.textContent = `Processing… ${Math.round(cur/total*100)}%`;
+    }
+  });
+
+  const fgUrl = URL.createObjectURL(fgBlob);
+  const fgImg = await loadImage(fgUrl);
+
+  return buildLayersFromFg(img, fgImg);
+}
+
+// ─── FALLBACK: fake depth (blur background) ──────────────────────────────────
+function fakeSegment(img) {
+  const W = Math.min(img.width, 800);
+  const H = Math.round(img.height * W / img.width);
+
+  // FG: original (slight scale up for parallax room)
+  const fgC = document.createElement('canvas');
+  fgC.width = W; fgC.height = H;
+  fgC.getContext('2d').drawImage(img, 0, 0, W, H);
+
+  // BG: blurred + darkened version
+  const bgC = document.createElement('canvas');
+  bgC.width = W; bgC.height = H;
+  const bgCtx = bgC.getContext('2d');
+  bgCtx.filter = 'blur(10px)';
+  bgCtx.drawImage(img, -10, -10, W + 20, H + 20);
+  bgCtx.filter = 'none';
+  bgCtx.fillStyle = 'rgba(0,0,20,0.35)';
+  bgCtx.fillRect(0, 0, W, H);
+
+  return { fgCanvas: fgC, bgCanvas: bgC };
+}
+
+// ─── BUILD LAYERS FROM TRANSPARENT FG ────────────────────────────────────────
+function buildLayersFromFg(origImg, fgImg) {
+  const W = Math.min(origImg.width, 800);
+  const H = Math.round(origImg.height * W / origImg.width);
+
+  // BG: original blurred + darkened
+  const bgC = document.createElement('canvas');
+  bgC.width = W; bgC.height = H;
+  const bgCtx = bgC.getContext('2d');
+  bgCtx.filter = 'blur(8px)';
+  bgCtx.drawImage(origImg, -12, -12, W + 24, H + 24);
+  bgCtx.filter = 'none';
+  bgCtx.fillStyle = 'rgba(0,0,20,0.4)';
+  bgCtx.fillRect(0, 0, W, H);
+
+  // FG: transparent subject
+  const fgC = document.createElement('canvas');
+  fgC.width = W; fgC.height = H;
+  fgC.getContext('2d').drawImage(fgImg, 0, 0, W, H);
+
+  return { fgCanvas: fgC, bgCanvas: bgC };
+}
+
+// ─── SHOW STAGE ───────────────────────────────────────────────────────────────
+function showStage(fgCanvas, bgCanvas) {
+  hideProcessing();
+  heroSection.style.display = 'none';
+  infoSection.style.display = 'none';
+  stageWrap.classList.add('active');
+
+  layerBg.style.backgroundImage = `url(${bgCanvas.toDataURL()})`;
+  layerFg.style.backgroundImage = `url(${fgCanvas.toDataURL()})`;
+
+  startParallax();
+}
+
+// ─── PARALLAX ─────────────────────────────────────────────────────────────────
+function startParallax() {
+  cancelAnimationFrame(animFrame);
+  requestGyro();
+  stage.addEventListener('mousemove', onMouseMove);
+  stage.addEventListener('touchmove', onTouchMove, { passive: false });
+  animLoop();
+}
+
+function animLoop() {
+  currentX += (targetX - currentX) * 0.08;
+  currentY += (targetY - currentY) * 0.08;
+  const d = depthMult;
+  layerBg.style.transform = `translate(${-currentX * DEPTH.x * d * 0.5}px, ${-currentY * DEPTH.y * d * 0.5}px)`;
+  layerFg.style.transform = `translate(${currentX * DEPTH.x * d}px, ${currentY * DEPTH.y * d}px)`;
+  animFrame = requestAnimationFrame(animLoop);
+}
+
+function onMouseMove(e) {
+  if (gyroActive) return;
+  const r = stage.getBoundingClientRect();
+  targetX = ((e.clientX - r.left) / r.width  - 0.5) * 2;
+  targetY = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+}
+
+function onTouchMove(e) {
+  if (gyroActive) return;
+  e.preventDefault();
+  const t = e.touches[0];
+  const r = stage.getBoundingClientRect();
+  targetX = ((t.clientX - r.left) / r.width  - 0.5) * 2;
+  targetY = ((t.clientY - r.top)  / r.height - 0.5) * 2;
+}
+
+function requestGyro() {
+  if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+    DeviceMotionEvent.requestPermission().then(state => {
+      if (state === 'granted') listenGyro();
+    });
+  } else if (window.DeviceOrientationEvent) {
+    listenGyro();
+  }
+}
+
+function listenGyro() {
+  window.addEventListener('deviceorientation', e => {
+    if (e.gamma === null) return;
+    gyroActive = true;
+    gyroDot.classList.add('active');
+    gyroLabel.textContent = 'gyro';
+    targetX = Math.max(-1, Math.min(1, e.gamma / 30));
+    targetY = Math.max(-1, Math.min(1, (e.beta - 45) / 30));
+  });
+}
+
+// ─── SAVE ─────────────────────────────────────────────────────────────────────
+function savePhoto() {
+  const canvas = document.createElement('canvas');
+  const s = stage.getBoundingClientRect();
+  canvas.width = s.width; canvas.height = s.height;
+  const ctx = canvas.getContext('2d');
+
+  const bgImg = new Image();
+  bgImg.onload = () => {
+    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+    const fgImg = new Image();
+    fgImg.onload = () => {
+      ctx.drawImage(fgImg, 0, 0, canvas.width, canvas.height);
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = 'dukestu-living.png';
+      a.click();
+    };
+    fgImg.src = layerFg.style.backgroundImage.slice(5, -2);
+  };
+  bgImg.src = layerBg.style.backgroundImage.slice(5, -2);
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function resetPhoto() {
+  cancelAnimationFrame(animFrame);
+  stageWrap.classList.remove('active');
+  heroSection.style.display = '';
+  infoSection.style.display = '';
+  fileInput.value = '';
+  targetX = currentX = 0;
+  targetY = currentY = 0;
+}
+
+// ─── PROCESSING UI ────────────────────────────────────────────────────────────
+function showProcessing(msg) {
+  processing.querySelector('.proc-text').textContent = msg;
+  procStep.textContent = '';
+  processing.classList.add('active');
+}
+function hideProcessing() { processing.classList.remove('active'); }
+</script>
+</body>
+</html>
